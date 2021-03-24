@@ -155,7 +155,9 @@ int free_matrix(int** matrix, int row, int col)
 /* assign random values to the given matrix */
 int fill_data(int** matrix, int row, int col)
 {
-
+    for(int i = 0; i < row; i++)        // 0 ~ row 만큼 반복한다.
+        for(int j = 0; j < col; j++)    // 0 ~ col 만큼 반복한다.
+            matrix[i][j] = rand() % 20; // 행렬의 성분값을 0 ~ 19사이의 값을 랜덤으로 부여한다.
 }
 
 /* matrix_sum = matrix_a + matrix_b */
