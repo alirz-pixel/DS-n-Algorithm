@@ -130,7 +130,15 @@ int** create_matrix(int row, int col)
 /* print matrix whose size is row x col */
 void print_matrix(int** matrix, int row, int col)
 {
+    for(int i = 0; i < row; i++)         // 0 ~ row 만큼 반복한다.          
+    {
+        for(int j = 0; j < col; j++)     // 0 ~ col 만큼 반복한다.
+            printf("%-4d", matrix[i][j]);// 필드 폭을 4칸 확보하고, 왼쪽 정렬한다.
 
+        printf("\n");
+    }
+
+    printf("\n");
 }
 
 
