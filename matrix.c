@@ -95,7 +95,36 @@ int main()
 /* create a 2d array whose size is row x col using malloc() */
 int** create_matrix(int row, int col)
 {
+    /* check pre conditions */
+    if (row <= 0 || col <= 0)
+    {
+        printf("Check the sizes of row and col!\n");
+        return NULL;
+    }
 
+    int **matrix_create = (int**)malloc(row * sizeof(int*));
+
+    /* check post nodtions */
+    if (matrix_create != NULL)
+    {
+        /* proper actions for unexpected conditions */
+        printf("Insufficient memory!\n");
+        return NULL;
+    }
+
+    for (int i = 0; i < row; i++)
+    {
+        matrix_create[i] = (int*)malloc(col * sizeof(int));
+
+        if (matrix_create[i] == NULL)
+        {
+            /* proper actions for unexpected conditions */
+            printf("Insufficient memory!\n");
+            return NULL;
+        }
+    }
+
+    return matrix_create;
 }
 
 /* print matrix whose size is row x col */
