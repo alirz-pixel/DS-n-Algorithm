@@ -137,7 +137,10 @@ void print_matrix(int** matrix, int row, int col)
 /* free memory allocated by create_matrix() */
 int free_matrix(int** matrix, int row, int col)
 {
-    
+    for (int i = 0; i < row; i++)   // 0 ~ row 만큼 반복한다.
+        free(matrix[i]);            // 2차원 배열의 가로 공간 메모리 해제
+
+    free(matrix);                   // 2차원 배열의 세로 공간 메모리 해제
 }
 
 
