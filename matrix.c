@@ -104,8 +104,8 @@ int** create_matrix(int row, int col)
 
     int **matrix_create = (int**)malloc(row * sizeof(int*));
 
-    /* check post nodtions */
-    if (matrix_create != NULL)
+    /* check post conditions */
+    if (matrix_create == NULL)
     {
         /* proper actions for unexpected conditions */
         printf("Insufficient memory!\n");
@@ -137,7 +137,7 @@ void print_matrix(int** matrix, int row, int col)
 /* free memory allocated by create_matrix() */
 int free_matrix(int** matrix, int row, int col)
 {
-
+   
 }
 
 
