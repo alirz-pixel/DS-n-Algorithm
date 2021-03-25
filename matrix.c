@@ -207,9 +207,9 @@ int subtraction_matrix(int** matrix_a, int** matrix_b, int row, int col)
 /* transpose the matrix to matrix_t */
 int transpose_matrix(int** matrix, int** matrix_t, int row, int col)
 {
-    for (int i = 0; i < row; i++)
-        for (int j = 0; j < col; j++)
-            matrix_t[i][j] = matrix[j][i];
+    for (int i = 0; i < row; i++)           // 0 ~ row(실제값 : col) 만큼 반복한다.
+        for (int j = 0; j < col; j++)       // 0 ~ col(실제값 : row) 만큼 반복한다.
+            matrix_t[i][j] = matrix[j][i];  // 행렬 A의 행과 열을 바꿔 대입하면서 전치행렬 T를 구한다.
 }
 
 /* matrix_axt - matrix_a x matrix_t */
