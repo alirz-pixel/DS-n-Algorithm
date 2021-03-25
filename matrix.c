@@ -29,7 +29,7 @@ int main()
 
     printf("Matrix Created.\n");
 
-    if (matrix_a == NULL || matrix_b == NULL) {return -1;}
+    if (matrix_a == NULL || matrix_b == NULL || matrix_a_t == NULL) {return -1;}
 
     do{
         printf("----------------------------------------------------------------\n");
