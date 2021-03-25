@@ -207,7 +207,9 @@ int subtraction_matrix(int** matrix_a, int** matrix_b, int row, int col)
 /* transpose the matrix to matrix_t */
 int transpose_matrix(int** matrix, int** matrix_t, int row, int col)
 {
-
+    for (int i = 0; i < row; i++)
+        for (int j = 0; j < col; j++)
+            matrix_t[i][j] = matrix[j][i];
 }
 
 /* matrix_axt - matrix_a x matrix_t */
