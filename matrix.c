@@ -163,7 +163,24 @@ int fill_data(int** matrix, int row, int col)
 /* matrix_sum = matrix_a + matrix_b */
 int addition_matrix(int** matrix_a, int** matrix_b, int row, int col)
 {
+    int** matrix_add = create_matrix(row, col);
 
+    if (matrix_add == NULL) //만약, 메모리가 부족한 경우
+    {
+        /* proper actions for unexpected conditions */
+        printf("메모리 부족으로 addition_matrix 함수를 수행할 수 없습니다.\n");
+        return -1;  //에러가 발생했으므로 -1을 반환한다.
+    }
+
+    for (int i = 0; i < row; i++)       // 0 ~ row 만큼 반복한다.
+        for (int j = 0; j < col; j++)   // 0 ~ col 만큼 반복한다.
+            matrix_add[i][j] = matrix_a[i][j] + matrix_b[i][j]; // 행렬의 합연산 실행하는 코드
+
+    print_matrix(matrix_add, row, col); // 연산이 끝났으므로 결과값을 프린트한다.
+
+    free_matrix(matrix_add, row, col);  // 연산이 종료되었으므로 할당했던 메모리를 해제한다.
+
+    return 0;
 }
 
 /* matrix_sub = matrix_a - matrix_b */
