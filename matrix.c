@@ -120,6 +120,10 @@ int** create_matrix(int row, int col)
         {
             /* proper actions for unexpected conditions */
             printf("Insufficient memory!\n");
+ 
+            //메모리를 할당하던 도중 오류가 생겼기 때문에
+            //오류가 생기기 전까지 할당한 메모리를 해제 해야함.
+            free_matrix(matrix_create, i, col);
             return NULL;
         }
     }
