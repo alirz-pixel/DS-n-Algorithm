@@ -215,6 +215,27 @@ int transpose_matrix(int** matrix, int** matrix_t, int row, int col)
 /* matrix_axt - matrix_a x matrix_t */
 int multiply_matrix(int** matrix_a, int** matrix_t, int row, int col)
 {
+    int result; // matrix_mutl에 각 요소의 행렬 곱 연산 결과를 넣기 위한 임시 변수 선언
+    int** matrix_multi = create_matrix(row, row); 
+    // ixj 행렬 * jxi 행렬의 연산 결과는 ixi 행렬의 형태가 나오므로 ixi 행렬로 matrix_multi를 만든다.
 
+    for (int i_row = 0; i_row < row; i_row++)
+    {
+        for (int j_col = 0; j_col < row; j_col++)
+        {
+            result = 0;
+            
+            for (int i = 0; i < row; i++)
+                result += (matrix_a[i_row][i] * matrix_t[i][j_col]);
+
+            matrix_multi[i_row][j_col] = result; //연산결과
+
+            //printf("matrix_multi[%d][%d] is %d\n\n", i_row, j_col, matrix_multi[i_row][j_col]);
+        }
+    }
+
+    print_matrix(matrix_multi, row, row);
+
+    free_matrix(matrix_multi, row, row);
 }
 
