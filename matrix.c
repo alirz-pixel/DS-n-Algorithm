@@ -292,7 +292,7 @@ int multiply_matrix(int** matrix_a, int** matrix_t, int row, int col)
         {
             result = 0;
             
-            for (int i = 0; i < row; i++)
+            for (int i = 0; i < col; i++)
                 result += (matrix_a[i_row][i] * matrix_t[i][j_col]); // A * T 를 수행하는 코드
 
             matrix_multi[i_row][j_col] = result; //연산결과를 matrix_multi에 대입하는 코드
