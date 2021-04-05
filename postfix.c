@@ -49,6 +49,8 @@ void evaluation();
 
 int main()
 {
+	printf("[----- [ÃÖ¹®Çü] [2020039004] -----]\n");
+
 	char command;
 
 	do{
