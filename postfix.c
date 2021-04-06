@@ -14,7 +14,7 @@
 
 /* stack 내에서 우선순위, lparen = 0 가장 낮음 */
 typedef enum{
-	inlparen = 20, /* ( 스택 안에 있는 왼쪽 괄호*/
+	outlparen = 20, /* ( 스택 밖에 있는 왼쪽 괄호*/
 	lparen = 0,  /* ( 왼쪽 괄호 */
 	rparen = 9,  /* ) 오른쪽 괄호*/
 	times = 7,   /* * 곱셈 */
@@ -189,27 +189,45 @@ void toPostfix()
 	char *exp = infixExp;
 	char x; /* 문자하나를 임시로 저장하기 위한 변수 */
 	precedence token;
+	int lparen_Error; // 괄호가 제대로 되어있는지 확인해 주는 변수
 
 	/* exp를 증가시켜가면서, 문자를 읽고 postfix로 변경 */
 	while(*exp != '\0')
 	{
+		lparen_Error = 1; // 괄호가 제대로 되어있다면 값이 0으로 변경
 		token = getToken(*exp);
 		// x = (*exp++);
 
 		if (token == lparen)  // 스택 밖에 ( 왼쪽 괄호가 있을 때, 우선순위 20 부여
-			token = inlparen; // inlparen = 20
-
+			token = outlparen; // outlparen = 20
 		
 		if (token == operand) // token이 피연산자 일 때,
 			charCat(exp);	  // postfixExp에 현재 문자 추가
 
 		else if (token == rparen) // token이 ) 오른쪽 괄호 일 때,
 		{
-			while (getToken(postfixStack[postfixStackTop]) != lparen) // postfixStack[postfixStackTop]의 값이 ( 왼쪽 괄호가 나올 때까지 반복한다.
+			while (postfixStackTop != -1) 
 			{
+				// postfixStack[postfixStackTop]의 값이 ( 왼쪽 괄호가 나오면 반복문 종료
+				if (getToken(postfixStack[postfixStackTop]) == lparen)
+				{
+					lparen_Error = 0;
+					break;
+				}
+
 				x = postfixPop();
 				charCat(&x); // 왼쪽 괄호가 나오기 '전'까지의 연산자들은 postfixExp에 저장한다.
 			}
+
+			if (lparen_Error) // 입력받은 값에 왼쪽 괄호가 없었다면
+			{
+				printf("Error! : 왼쪽 괄호를 찾지 못했습니다.\n"); // 자동으로 reset 진행
+				printf("디버그 출력 후, 자동으로 reset이 진행됩니다.\n");
+				debug();
+				reset();
+				break;
+			}
+
 			postfixPop(); // 왼쪽 괄호를 버린다.
 		}
 
@@ -218,9 +236,10 @@ void toPostfix()
 			// 입력 연산자가 스택의 탑에 있는 연산자보다 우선순위가 낮은 경우, 
 			// 스택 탑에서 Pop 하여 postfixExp에 넣어준다.
 			
-			while (getToken(postfixStack[postfixStackTop]) >= token) // 현재 토큰 값보다 postfixStack[postfixStackTop]의 우선순위가 높으면 반복한다.
+			while (postfixStackTop != -1) // postfixStack is empty 라면, 반복문 종료 
 			{
-				if(postfixStackTop == -1)  // postfixStack is empty 라면, 반복문 종료
+				// 현재 토큰 값보다 postfixStack[postfixStackTop]의 우선순위가 낮아지면 반복문 종료
+				if (getToken(postfixStack[postfixStackTop]) < token)
 					break;
 
 				x = postfixPop();
