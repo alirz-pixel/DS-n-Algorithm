@@ -40,6 +40,8 @@ void printList(headNode* h);
 
 int main()
 {
+	printf("[----- [ÃÖ¹®Çü] [2020039004] -----]\n\n");
+
 	char command;
 	int key;
 	headNode* headnode=NULL;
