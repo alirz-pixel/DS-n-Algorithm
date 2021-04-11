@@ -364,7 +364,7 @@ int deleteNode(headNode* h, int key) {
 			searchNode = searchNode->link;
 		}
 
-		printf("리스트에 삭제할 key 값을 찾지 못했습니다.\n");			
+		printf("리스트에서 삭제하고자 하는 key 값을 찾지 못했습니다.\n");			
 		return -1;
 	}
 
@@ -431,27 +431,63 @@ int invertList(headNode* h) {
 		return -1;
 	}
 
+	// 연순으로 재배치 되려면, 리스트의 사이즈가 2개 이상 있어야 된다.
+	// 리스트의 사이즈를 구하기 위한 변수 i 선언
+	int i = 0;  
+	listNode* p = h->first; 
+
+	while (p != NULL)
+	{
+		p = p->link;
+		i++;
+	}
+
+	if (i < 2) // list의 사이즈가 2개 미만인 경우, 에러 발생
+	{
+		printf("Error! : 리스트의 사이즈가 2개 미만입니다!\n");
+		return -1;
+	}
+
+	listNode* tail = h->first;
+	listNode* middle = tail->link;
+	listNode* lead = middle->link;
+
+	while (lead != NULL) // lead의 값이 NULL일 때까지 반복한다.
+	{
+		middle->link = tail;
+
+		// tail, middle, lead를 각각 다음으로 보낸다.
+		tail = middle;
+		middle = lead;
+		lead = lead->link;
+	}
+	middle->link = tail;
+
+	h->first->link = NULL; // 역순 배치 전의 h->first->link를 NULL로 바꿔줘야 함.
+	h->first = middle; 
+
 	return 0;
 }
 
 
 void printList(headNode* h) {
-	int i = 0;
+	int i = 0; // 리스트의 사이즈를 구하기 위한 변수 i 선언
 	listNode* p;
 
 	printf("\n---PRINT\n");
 
-	if(h == NULL) {
+	if(h == NULL) { 
 		printf("Nothing to print....\n");
 		return;
 	}
 
 	p = h->first;
 
-	while(p != NULL) {
+	while(p != NULL) { // p 가 NULL일 때까지 반복한다.
+		// 리스트를 하나씩 검색하면서 값을 출력하고 i에 1을 더해준다.
 		printf("[ [%d]=%d ] ", i, p->key);
 		p = p->link;
-		i++;
+		i++; 
 	}
 
 	printf("  items = %d\n", i);
