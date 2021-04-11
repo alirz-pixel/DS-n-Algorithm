@@ -298,6 +298,19 @@ int deleteFirst(headNode* h) {
 		return -1;
 	}
 
+	// 리스트에 아무 값도 없는 경우 에러 발생
+	if (h->first == NULL)
+	{
+		printf("Error! : 리스트에 값이 없습니다.\n");
+		return -1;
+	}
+
+	//맨 앞의 노드를 삭제하는 경우, h->first 를 하나 앞으로 이동해야한다.
+	listNode* freeNode = h->first;
+	h->first = freeNode->link; // h->first 를 하나 앞으로 이동시키는 코드.
+
+	free(freeNode);
+
 	return 0;
 }
 
@@ -313,8 +326,49 @@ int deleteNode(headNode* h, int key) {
 		return -1;
 	}
 
-	return 0;
+	// 리스트에 아무 값도 없는 경우 에러 발생
+	if (h->first == NULL)
+	{
+		printf("Error! : 리스트에 값이 없습니다.\n");
+		return -1;
+	}
 
+	// h->first->key 와 key 값이 같은 경우
+	// 즉, 맨앞의 노드를 삭제하는 경우
+	if (h->first->key == key)
+	{
+		listNode* freeNode = h->first;
+		h->first = freeNode->link;
+	}
+
+	// 맨 앞의 노드를 삭제하지 않기 때문에 일일이 조사해야함.
+	else
+	{
+		listNode* searchNode = h->first;
+		listNode* previousNode = NULL;
+
+		while (searchNode != NULL) // searchNode 가 NULL이 될 때까지 반복
+		{
+			if (searchNode->key == key) // 삭제하고자 하는 키값을 찾은 경우
+			{
+				previousNode->link = searchNode->link;
+
+				free(searchNode);
+				return 0;
+			}
+
+			// previousNode에 현재 searchNode를 대입해주고
+			// searchNode는 searchNode->link를 대입하면서
+			// 리스트를 하나씩 검색한다.
+			previousNode = searchNode;
+			searchNode = searchNode->link;
+		}
+
+		printf("리스트에 삭제할 key 값을 찾지 못했습니다.\n");			
+		return -1;
+	}
+
+	return 0;
 }
 
 /**
@@ -327,6 +381,40 @@ int deleteLast(headNode* h) {
 		printf("Error! : headnode에 할당받은 메모리가 없어 에러가 발생하였습니다.\n");
 		return -1;
 	}
+
+	// 리스트에 아무 값도 없는 경우 에러 발생
+	if (h->first == NULL)
+	{
+		printf("Error! : 리스트에 값이 없습니다.\n");
+		return -1;
+	}
+
+	listNode* freeNode = h->first;
+
+	// 만약, 연결리스트의 값이 하나뿐이라면
+	if (h->first->link == NULL)
+		h->first = NULL;
+
+	// 만약, 연결리스트의 값이 둘 이상이라면
+	else
+	{
+		listNode* previousNode = NULL;
+
+		// 맨 뒤의 노드를 제거해야 되기 때문에 freeNode의 다음 노드가 NULL 일 때까지 반복한다.
+		while (freeNode->link != NULL) 
+		{
+			// previousNode에 현재 freeNode를 대입해주고
+			// freeNode는 freeNode->link를 대입하면서
+			// 리스트를 하나씩 검색한다.						
+			previousNode = freeNode;
+			freeNode = freeNode->link;
+		}
+
+		// previousNode의 다음 노드가 삭제되었으므로 NULL 값을 대입한다.
+		previousNode->link = NULL;
+	}
+
+	free(freeNode);
 
 	return 0;
 }
