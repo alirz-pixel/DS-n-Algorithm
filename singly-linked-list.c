@@ -7,6 +7,7 @@
  */
 
 
+
 #include<stdio.h>
 #include<stdlib.h>
 
@@ -114,11 +115,23 @@ headNode* initialize(headNode* h) {
 
 	/* headNode에 대한 메모리를 할당하여 리턴 */
 	headNode* temp = (headNode*)malloc(sizeof(headNode));
+	if (temp == NULL)  // 메모리를 할당받지 못한 경우 NULL 값 반환
+	{
+		printf("메모리를 할당받지 못했습니다.\n");
+		return NULL;
+	}
 	temp->first = NULL;
 	return temp;
 }
 
 int freeList(headNode* h){
+
+	// h에 할당받은 메모리가 없는 경우 에러 발생
+	if (h == NULL) {
+		printf("Error! : headnode에 할당받은 메모리가 없어 에러가 발생하였습니다.\n");
+		return -1;
+	}
+
 	/* h와 연결된 listNode 메모리 해제
 	 * headNode도 해제되어야 함.
 	 */
@@ -141,7 +154,19 @@ int freeList(headNode* h){
  */
 int insertFirst(headNode* h, int key) {
 
+	// h에 할당받은 메모리가 없는 경우 에러 발생
+	if (h == NULL) {
+		printf("Error! : headnode에 할당받은 메모리가 없어 에러가 발생하였습니다.\n");
+		return -1;
+	}
+
 	listNode* node = (listNode*)malloc(sizeof(listNode));
+	if (node == NULL)
+	{
+		printf("메모리를 할당받지 못했습니다.\n");
+		return -1;
+	}
+
 	node->key = key;
 
 	node->link = h->first;
@@ -154,6 +179,12 @@ int insertFirst(headNode* h, int key) {
 /* 리스트를 검색하여, 입력받은 key보다 큰값이 나오는 노드 바로 앞에 삽입 */
 int insertNode(headNode* h, int key) {
 
+	// h에 할당받은 메모리가 없는 경우 에러 발생
+	if (h == NULL) {
+		printf("Error! : headnode에 할당받은 메모리가 없어 에러가 발생하였습니다.\n");
+		return -1;
+	}
+
 	return 0;
 }
 
@@ -161,6 +192,12 @@ int insertNode(headNode* h, int key) {
  * list에 key에 대한 노드하나를 추가
  */
 int insertLast(headNode* h, int key) {
+
+	// h에 할당받은 메모리가 없는 경우 에러 발생
+	if (h == NULL) {
+		printf("Error! : headnode에 할당받은 메모리가 없어 에러가 발생하였습니다.\n");
+		return -1;
+	}
 
 	return 0;
 }
@@ -171,6 +208,11 @@ int insertLast(headNode* h, int key) {
  */
 int deleteFirst(headNode* h) {
 
+	// h에 할당받은 메모리가 없는 경우 에러 발생
+	if (h == NULL) {
+		printf("Error! : headnode에 할당받은 메모리가 없어 에러가 발생하였습니다.\n");
+		return -1;
+	}
 
 	return 0;
 }
@@ -181,6 +223,12 @@ int deleteFirst(headNode* h) {
  */
 int deleteNode(headNode* h, int key) {
 
+	// h에 할당받은 메모리가 없는 경우 에러 발생
+	if (h == NULL) {
+		printf("Error! : headnode에 할당받은 메모리가 없어 에러가 발생하였습니다.\n");
+		return -1;
+	}
+
 	return 0;
 
 }
@@ -190,6 +238,12 @@ int deleteNode(headNode* h, int key) {
  */
 int deleteLast(headNode* h) {
 
+	// h에 할당받은 메모리가 없는 경우 에러 발생
+	if (h == NULL) {
+		printf("Error! : headnode에 할당받은 메모리가 없어 에러가 발생하였습니다.\n");
+		return -1;
+	}
+
 	return 0;
 }
 
@@ -198,6 +252,12 @@ int deleteLast(headNode* h) {
  * 리스트의 링크를 역순으로 재 배치
  */
 int invertList(headNode* h) {
+
+	// h에 할당받은 메모리가 없는 경우 에러 발생
+	if (h == NULL) {
+		printf("Error! : headnode에 할당받은 메모리가 없어 에러가 발생하였습니다.\n");
+		return -1;
+	}
 
 	return 0;
 }
