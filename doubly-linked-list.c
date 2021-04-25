@@ -141,6 +141,30 @@ int initialize(headNode** h) {
 }
 
 int freeList(headNode* h){
+	
+	// initialize는 할당받은 주소값을 headnode에 대입해야하기 때문에 이중포인터를 매개변수로 받았지만
+	// freeList는 할당받은 주소값에 접근하여 해제해주기만 하면 되기 때문에(=값을 수정할 필요가 없기 때문에) 싱글 포인터를 매개변수로 받는다.
+
+	// h에 메모리가 할당되어 있지 않은 경우
+	if (h == NULL)
+	{
+		printf("Error! : 할당받은 메모리가 없어 freeList를 수행할 수 없습니다.\n");
+		return -1;
+	}
+	
+	// doubly-linked-list에 들어있는 값을 하나씩 방문하며 메모리를 해제한다.
+	listNode *searchNode = h->first;
+	listNode *freeNode;
+	while (searchNode != NULL) // searchNode가 NULL값일 때 까지 반복
+	{ 
+		freeNode = searchNode;
+		searchNode = searchNode->rlink;
+		free(freeNode);
+	}
+
+
+	free(h); // 마지막으로 h를 해제해준다.
+
 	return 0;
 }
 
