@@ -489,6 +489,54 @@ int insertNode(headNode* h, int key) {
  */
 int deleteNode(headNode* h, int key) {
 
+	// h에 메모리가 할당되어 있지 않은 경우
+	if (h == NULL)
+	{
+		printf("Error! : 할당받은 메모리가 없어 deleteFirst를 수행할 수 없습니다.\n");
+		return -1;
+	}
+
+	// list에 노드가 하나도 없다면
+	if (h->first == NULL)
+	{
+		printf("Error! : list에 노드가 없어 deleteFirst를 수행할 수 없습니다.\n");
+		return -1;
+	}
+
+
+	listNode *searchNode = h->first;
+	while(searchNode != NULL) // searchNode가 NULL일 떄까지 반복
+	{
+		if(searchNode->key == key) // 삭제한 노드를 찾은 경우
+			break;
+
+		searchNode = searchNode->rlink;
+	}
+
+	if (searchNode == NULL) // 삭제할 노드를 찾지 못했을 경우
+	{
+		printf("Error! : list에서 삭제할 노드를 찾지 못했습니다.\n");
+		return -1;
+	}
+
+
+	// 맨 앞의 노드를 삭제하는 경우
+	if (searchNode->llink == NULL)
+		searchNode->rlink->llink = NULL;
+
+	// 맨 뒤의 노드를 삭제하는 경우
+	else if (searchNode->rlink == NULL)
+		searchNode->llink->rlink = NULL;
+
+	// 중간의 노드를 삭제하는 경우
+	else
+	{
+		searchNode->rlink->llink = searchNode->llink;
+		searchNode->llink->rlink = searchNode->rlink;
+	}
+
+	free(searchNode);
+
 	return 1;
 }
 
