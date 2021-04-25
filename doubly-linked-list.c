@@ -200,6 +200,41 @@ void printList(headNode* h) {
  */
 int insertLast(headNode* h, int key) {
 
+	// h에 메모리가 할당되어 있지 않은 경우
+	if (h == NULL)
+	{
+		printf("Error! : 할당받은 메모리가 없어 insertLast 수행할 수 없습니다.\n");
+		return -1;
+	}
+
+
+	listNode *newNode = (listNode*)malloc(sizeof(listNode));
+	if (newNode == NULL) // 메모리를 할당받지 못한 경우
+	{
+		printf("Error! : 메모리를 할당받지 못했습니다.\n");
+		return -1;
+	}
+
+	newNode->key = key;
+	newNode->llink = NULL;
+	newNode->rlink = NULL;
+
+
+	if (h->first == NULL)   // empty인 상태라면
+		h->first = newNode; // list의 첫 노드를 newNode로 한다.
+
+	else // not empty 라면
+	{
+		listNode *searchNode = h->first; // 맨 마지막에 노드를 넣기 위한 변수
+
+		while(searchNode->rlink != NULL)  // searchNode의 다음 노드가 NULL일 때까지 반복
+			searchNode = searchNode->rlink;
+		
+		// list의 마지막 노드에 newNode를 추가하는 코드
+		searchNode->rlink = newNode;
+		newNode->llink = searchNode;
+	}
+
 	return 0;
 }
 
