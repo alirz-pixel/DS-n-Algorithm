@@ -141,7 +141,7 @@ int initialize(headNode** h) {
 }
 
 int freeList(headNode* h){
-	
+
 	// initialize는 할당받은 주소값을 headnode에 대입해야하기 때문에 이중포인터를 매개변수로 받았지만
 	// freeList는 할당받은 주소값에 접근하여 해제해주기만 하면 되기 때문에(=값을 수정할 필요가 없기 때문에) 싱글 포인터를 매개변수로 받는다.
 
@@ -170,11 +170,12 @@ int freeList(headNode* h){
 
 
 void printList(headNode* h) {
-	int i = 0;
+	int i = 0; // doubly-linked-list에 들어있는 item의 개수를 위한 int형 변수
 	listNode* p;
 
 	printf("\n---PRINT\n");
 
+	// h에 메모리가 할당되어 있지 않은 경우
 	if(h == NULL) {
 		printf("Nothing to print....\n");
 		return;
@@ -182,7 +183,7 @@ void printList(headNode* h) {
 
 	p = h->first;
 
-	while(p != NULL) {
+	while(p != NULL) { // p가 NULL일 때까지 반복
 		printf("[ [%d]=%d ] ", i, p->key);
 		p = p->rlink;
 		i++;
