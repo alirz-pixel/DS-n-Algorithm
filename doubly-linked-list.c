@@ -367,6 +367,53 @@ int deleteFirst(headNode* h) {
  */
 int invertList(headNode* h) {
 
+	// h에 메모리가 할당되어 있지 않은 경우
+	if (h == NULL)
+	{
+		printf("Error! : 할당받은 메모리가 없어 invertList를 수행할 수 없습니다.\n");
+		return -1;
+	}
+
+
+	int size = 0; // 리스트에 들어있는 노드의 수를 위한  변수
+	listNode *searchNode = h->first;
+	while (searchNode != NULL)
+	{
+		searchNode = searchNode->rlink;
+		size++;
+	}
+
+	// 리스트에 들어있는 노드의 수가 2개 미만인 경우
+	if (size < 2)
+	{
+		printf("Error! : list에 노드가 2개 이하이므로 invertList를 수행할 수 없습니다.\n");
+		return -1;
+	}
+
+	else
+	{
+		searchNode = h->first;
+		listNode *tempRlink = searchNode->rlink;
+		listNode *tempLlink = searchNode->llink;
+
+		while (searchNode->rlink != NULL)
+		{
+			searchNode->llink = tempRlink;
+			searchNode->rlink = tempLlink;
+
+			// searchNode->rlink를 searchNode->llink로 바꿨기 때문에
+			// 다음 노드를 가기 위해선 searchNode->link를 해야 함
+			searchNode = searchNode->llink; 
+			tempRlink = searchNode->rlink;
+			tempLlink = searchNode->llink;
+		}
+
+		searchNode->rlink = tempLlink;
+		searchNode->llink = tempRlink;
+
+		h->first = searchNode;
+	}
+
 	return 0;
 }
 
