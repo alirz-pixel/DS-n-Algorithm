@@ -325,6 +325,38 @@ int insertFirst(headNode* h, int key) {
  */
 int deleteFirst(headNode* h) {
 
+	// h에 메모리가 할당되어 있지 않은 경우
+	if (h == NULL)
+	{
+		printf("Error! : 할당받은 메모리가 없어 deleteFirst를 수행할 수 없습니다.\n");
+		return -1;
+	}
+
+	// list에 노드가 하나도 없다면
+	if (h->first == NULL)
+	{
+		printf("Error! : list에 노드가 없어 deleteFirst를 수행할 수 없습니다.\n");
+		return -1;
+	}
+
+
+	// list에 노드가 하나뿐이라면
+	if (h->first->rlink == NULL)
+	{
+		free(h->first);
+		h->first = NULL;
+	}
+
+	else
+	{
+		listNode *freeNode = h->first;
+		h->first = h->first->rlink;		// h->frist를 기존 h->frist의 다음 노드로 해준다.
+
+		h->first->llink = NULL;			
+
+		free(freeNode);
+	}
+
 	return 0;
 }
 
