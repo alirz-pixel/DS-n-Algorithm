@@ -494,14 +494,14 @@ int deleteNode(headNode* h, int key) {
 	// h에 메모리가 할당되어 있지 않은 경우
 	if (h == NULL)
 	{
-		printf("Error! : 할당받은 메모리가 없어 deleteFirst를 수행할 수 없습니다.\n");
+		printf("Error! : 할당받은 메모리가 없어 deleteNode를 수행할 수 없습니다.\n");
 		return -1;
 	}
 
 	// list에 노드가 하나도 없다면
 	if (h->first == NULL)
 	{
-		printf("Error! : list에 노드가 없어 deleteFirst를 수행할 수 없습니다.\n");
+		printf("Error! : list에 노드가 없어 deleteNode를 수행할 수 없습니다.\n");
 		return -1;
 	}
 
