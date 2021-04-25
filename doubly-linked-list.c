@@ -466,7 +466,7 @@ int insertNode(headNode* h, int key) {
 			h->first = newNode;
 		}
 
-		else if (searchNode->rlink == NULL) // 노드를 맨 뒤에 삽입하는 경우
+		else if (searchNode->rlink == NULL && searchNode->key < key) // 노드를 맨 뒤에 삽입하는 경우
 		{
 			searchNode->rlink = newNode;
 			newNode->llink = searchNode;
