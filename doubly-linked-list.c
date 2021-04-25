@@ -245,6 +245,37 @@ int insertLast(headNode* h, int key) {
  */
 int deleteLast(headNode* h) {
 
+	// h에 메모리가 할당되어 있지 않은 경우
+	if (h == NULL)
+	{
+		printf("Error! : 할당받은 메모리가 없어 deleteLast를 수행할 수 없습니다.\n");
+		return -1;
+	}
+
+	// list에 노드가 하나도 없다면
+	if (h->first == NULL)
+	{
+		printf("Error! : list에 노드가 없어 deleteLast를 수행할 수 없습니다.\n");
+		return -1;
+	}
+
+
+	// list에 노드가 하나 뿐이라면
+	if (h->first->rlink == NULL)
+	{
+		free(h->first);
+		h->first = NULL;
+	}
+
+	else
+	{
+		listNode *searchNode = h->first;  // 마지막 노드를 삭제하기 위한 변수
+		while (searchNode->rlink != NULL) // searchNode의 다음 노드가 NULL일 때까지 반복
+			searchNode = searchNode->rlink;
+
+		searchNode->llink->rlink = NULL;  // 마지막 노드를 free하기 전, 마지막의 이전 노드를 마지막 노드로 설정해주는 코드
+		free(searchNode);
+	}
 
 	return 0;
 }
