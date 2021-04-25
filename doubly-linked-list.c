@@ -506,38 +506,54 @@ int deleteNode(headNode* h, int key) {
 	}
 
 
-	listNode *searchNode = h->first;
-	while(searchNode != NULL) // searchNode가 NULL일 떄까지 반복
+	// list에 노드가 하나뿐이고, 그 노드가 key값과 같다면
+	if ((h->first->rlink == NULL && h->first->llink == NULL) && h->first->key == key)
 	{
-		if(searchNode->key == key) // 삭제한 노드를 찾은 경우
-			break;
-
-		searchNode = searchNode->rlink;
+		free(h->first);
+		h->first = NULL;
 	}
 
-	if (searchNode == NULL) // 삭제할 노드를 찾지 못했을 경우
-	{
-		printf("Error! : list에서 삭제할 노드를 찾지 못했습니다.\n");
-		return -1;
-	}
-
-
-	// 맨 앞의 노드를 삭제하는 경우
-	if (searchNode->llink == NULL)
-		searchNode->rlink->llink = NULL;
-
-	// 맨 뒤의 노드를 삭제하는 경우
-	else if (searchNode->rlink == NULL)
-		searchNode->llink->rlink = NULL;
-
-	// 중간의 노드를 삭제하는 경우
+	// list에 노드가 여러 개라면
 	else
 	{
-		searchNode->rlink->llink = searchNode->llink;
-		searchNode->llink->rlink = searchNode->rlink;
+		listNode *searchNode = h->first;
+		while(searchNode != NULL) // searchNode가 NULL일 떄까지 반복
+		{
+			if(searchNode->key == key) // 삭제한 노드를 찾은 경우
+				break;
+
+			searchNode = searchNode->rlink;
+		}
+
+		if (searchNode == NULL) // 삭제할 노드를 찾지 못했을 경우
+		{
+			printf("Error! : list에서 삭제할 노드를 찾지 못했습니다.\n");
+			return -1;
+		}
+		
+
+		// 맨 앞의 노드를 삭제하는 경우
+		if (searchNode->llink == NULL)
+		{
+			h->first = searchNode->rlink;
+			searchNode->rlink->llink = NULL;
+		}
+
+		// 맨 뒤의 노드를 삭제하는 경우
+		else if (searchNode->rlink == NULL)
+			searchNode->llink->rlink = NULL;
+
+		// 중간의 노드를 삭제하는 경우
+		else
+		{
+			searchNode->rlink->llink = searchNode->llink;
+			searchNode->llink->rlink = searchNode->rlink;
+		}
+
+		free(searchNode);
 	}
 
-	free(searchNode);
+
 
 	return 1;
 }
