@@ -122,6 +122,21 @@ int main()
 
 int initialize(headNode** h) {
 
+	// singly-linked-list의 initialize 는 할당받은 메모리의 주소값을 반환하기 때문에 싱글포인터를 매개변수로 받지만
+	// doubly-linked-list의 initialize 는 매개변수로 입력받은 곳에 할당받은 메모리의 주소값을 직접 넣어야 되기 때문에 이중포인터를 매개변수로 받는다.
+
+	if (*h != NULL) // 이미 initialize를 한 경우, freeList를 한 후에 다시 메모리를 할당한다.
+		freeList(*h); // h는 headnode의 주소값을 가리키고 있기 때문에 freeList를 호출할 때, 역참조를 한번 해줘야 된다.
+
+	(*h) = (headNode*)malloc(sizeof(headNode)); // h에 할당받은 메모리의 주소값 대입해준다.
+	if (*h == NULL) // 메모리를 할당받지 못한 경우 
+	{
+		printf("Error! : 메모리를 할당받지 못했습니다.\n");
+		return -1;
+	}
+
+	(*h)->first = NULL;
+
 	return 1;
 }
 
