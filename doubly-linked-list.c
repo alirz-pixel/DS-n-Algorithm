@@ -422,6 +422,64 @@ int invertList(headNode* h) {
 /* 리스트를 검색하여, 입력받은 key보다 큰값이 나오는 노드 바로 앞에 삽입 */
 int insertNode(headNode* h, int key) {
 
+	// h에 메모리가 할당되어 있지 않은 경우
+	if (h == NULL)
+	{
+		printf("Error! : 할당받은 메모리가 없어 inseartNode를 수행할 수 없습니다.\n");
+		return -1;
+	}
+
+
+	listNode* newNode = (listNode*)malloc(sizeof(listNode));
+	if (newNode == NULL) // 메모리를 할당받지 못한 경우
+	{
+		printf("Error! : 메모리를 할당받지 못했습니다.\n");
+		return -1;
+	}
+
+	newNode->key = key;
+	newNode->rlink = NULL;
+	newNode->llink = NULL;
+
+
+	if (h->first == NULL)
+		h->first = newNode;
+
+	else
+	{
+		listNode *searchNode = h->first; 
+
+		while (searchNode->rlink != NULL) // searchNode의 다음 노드가 NULL일 때까지 반복
+		{
+			if (searchNode->key >= key)   // 입력받은 key보다 큰 값이 나오는 경우 반복문 종료
+				break;
+
+			searchNode = searchNode->rlink;
+		}
+		
+		if (searchNode == h->first && searchNode->key >= key) // 노드를 맨 앞에 삽입하는 경우
+		{
+			h->first->llink = newNode;
+			newNode->rlink = h->first;
+			h->first = newNode;
+		}
+
+		else if (searchNode->rlink == NULL) // 노드를 맨 뒤에 삽입하는 경우
+		{
+			searchNode->rlink = newNode;
+			newNode->llink = searchNode;
+		}
+
+		else // 노드를 중간에 삽입하는 경우
+		{
+			newNode->rlink = searchNode;
+			newNode->llink = searchNode->llink;
+
+			searchNode->llink->rlink = newNode;
+			searchNode->llink = newNode;
+		}
+	}
+
 	return 0;
 }
 
