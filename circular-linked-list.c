@@ -363,6 +363,37 @@ int invertList(listNode* h) {
  **/
 int insertNode(listNode* h, int key) {
 
+	// h에 메모리가 할당되어 있지 않은 경우
+	if (h == NULL)
+	{
+		printf("Error! : 할당받은 메모리가 없어 deleteNode를 수행할 수 없습니다.\n");
+		return -1;
+	}
+
+	
+	listNode *newNode = (listNode*)malloc(sizeof(listNode));
+	if (newNode == NULL)
+	{
+		printf("Error! : 메모리를 할당받지 못했습니다.\n");
+		return -1;
+	}
+
+	listNode *searchNode = h->rlink;
+	while (searchNode->rlink != h)  // searchNode의 다음 노드가 헤더 노드일 때까지 반복
+	{
+		if (searchNode->key >= key) // 입력받은 key보다 큰 값이 나오는 경우 반복문 종료
+			break;
+
+		searchNode = searchNode->rlink;
+	} 
+	
+	newNode->key = key;
+	newNode->rlink = searchNode;		// newNode의 rlink를 searchNode로 설정함
+	newNode->llink = searchNode->llink; // newNode의 llink를 searchNode의 이전 노드로 설정함
+
+	searchNode->llink->rlink = newNode; // searchNode의 이전 노드에서 rlink를 newNode로 설정함
+	searchNode->llink = newNode;        // searchNode의 llink를 newNode로 설정함
+
 	return 0;
 }
 
