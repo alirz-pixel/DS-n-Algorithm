@@ -275,9 +275,28 @@ int insertFirst(listNode* h, int key) {
  */
 int deleteFirst(listNode* h) {
 
+	// h에 메모리가 할당되어 있지 않은 경우
+	if (h == NULL)
+	{
+		printf("Error! : 할당받은 메모리가 없어 deleteFirst를 수행할 수 없습니다.\n");
+		return -1;
+	}
+
+	// list에 헤더 노드뿐 일 경우
+	if (h->llink == h) 
+	{
+		printf("Error! : list에 헤더 노드만 있기 때문에 deleteFirst를 수행할 수 없습니다.\n");
+		return -1;
+	}
+
+	listNode *firstNode = h->rlink;
+	firstNode->rlink->llink = h; // 두번째 노드의 llink를 헤더 노드로 설정한다. 
+	h->rlink = firstNode->rlink; // 헤더 노드의 rlink를 두 번째 노드로 설정한다.
+	// 위의 코드를 통해 기존의 두 번째 노드가 첫 번째 노드로 되게 된다. (단, list에 노드가 2개 이상을 경우)
+	
+	free(firstNode);
 
 	return 1;
-
 }
 
 
