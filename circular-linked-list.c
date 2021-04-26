@@ -235,6 +235,27 @@ int insertLast(listNode* h, int key) {
  */
 int deleteLast(listNode* h) {
 
+	// h에 메모리가 할당되어 있지 않은 경우
+	if (h == NULL)
+	{
+		printf("Error! : 할당받은 메모리가 없어 deleteLast를 수행할 수 없습니다.\n");
+		return -1;
+	}
+
+	// list에 헤더 노드뿐 일 경우
+	if (h->llink == h) 
+	{
+		printf("Error! : list에 헤더 노드만 있기 때문에 deleteLast를 수행할 수 없습니다.\n");
+		return -1;
+	}
+
+
+	listNode* lastNode = h->llink;
+
+	lastNode->llink->rlink = h; // '마지막 노드의 이전 노드'에서 rlink를 헤더노드로 설정한다.
+	h->llink = lastNode->llink; // 헤더노드의 llink를 새로운 마지막 노드로 설정한다.
+
+	free(lastNode);
 
 	return 1;
 }
