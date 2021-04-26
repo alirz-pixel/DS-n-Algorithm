@@ -131,6 +131,31 @@ int initialize(listNode** h) {
 /* 메모리 해제 */
 int freeList(listNode* h){
 
+	// h에 메모리가 할당되어 있지 않은 경우
+	if (h == NULL)
+	{
+		printf("Error! : 할당받은 메모리가 없어 freeList를 수행할 수 없습니다.\n");
+		return -1;
+	}
+
+	if (h->rlink != h) // 리스트에 헤더노드 뿐일 때, 헤더노드가 2번 삭제 되는 것을 방지하는 코드
+	{
+		listNode *searchNode = h->rlink;
+		listNode *freeNode;
+
+		h->llink->rlink = NULL; // 반복문이 종료가 되는 시점을 만들어 주기 위해 마지막 노드의 rlink를 NULL 값으로 대입해 준다.
+
+		while (searchNode != NULL) // searchNode가 NULL일 때까지 반복 
+		{
+			freeNode = searchNode;
+			searchNode = searchNode->rlink;
+
+			free(freeNode); // 헤더 노드부터 마지막 노드전까지 메모리를 해제시켜준다.
+		}
+	}
+	
+	free(h); // 헤더노드의 메모리를 해제시켜준다.
+
 	return 0;
 }
 
