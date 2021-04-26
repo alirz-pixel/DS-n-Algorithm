@@ -38,6 +38,8 @@ void printList(listNode* h);
 
 int main()
 {
+	printf("[----- [최문형] [2020039004] -----]\n");
+
 	char command;
 	int key;
 	listNode* headnode=NULL;
@@ -119,7 +121,7 @@ int initialize(listNode** h) {
 		printf("Error! : 메모리를 할당받지 못했습니다.\n");
 		return -1;
 	}
-	
+
 	(*h)->rlink = *h;
 	(*h)->llink = *h;
 	(*h)->key = -9999;
