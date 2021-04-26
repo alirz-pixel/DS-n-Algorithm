@@ -266,6 +266,27 @@ int deleteLast(listNode* h) {
  */
 int insertFirst(listNode* h, int key) {
 
+	// h에 메모리가 할당되어 있지 않은 경우
+	if (h == NULL)
+	{
+		printf("Error! : 할당받은 메모리가 없어 insertFirst를 수행할 수 없습니다.\n");
+		return -1;
+	}
+
+
+	listNode* newNode = (listNode*)malloc(sizeof(listNode));
+	if (newNode == NULL) // 메모리를 할당받지 못했을 경우
+	{
+		printf("메모리를 할당받지 못하여 insertFirst를 수행할 수 없습니다.\n");
+		return -1;
+	}
+
+	newNode->key = key;
+	newNode->llink = h;        // newNode가 첫 번째 노드가 될 예정이므로, noewNode의 llink를 헤더 노드로 설정한다.
+	newNode->rlink = h->rlink; // newNode가 첫 번째 노드가 될 예정이므로, 기존의 첫번째 노드를 newNode의 rlink로 설정한다.
+
+	h->rlink->llink = newNode; // 기존의 첫 번째 노드의 llink를 newNode로 설정하여 newNode를 첫 번째 노드로 만듦
+	h->rlink = newNode;		   // 첫 번째 노드가 변경되었으므로 h->rlink를 newNode로 설정한다.
 
 	return 1;
 }
