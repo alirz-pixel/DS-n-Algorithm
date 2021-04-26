@@ -114,6 +114,12 @@ int initialize(listNode** h) {
 
 	/* headNode에 대한 메모리를 할당하여 리턴 */
 	*h = (listNode*)malloc(sizeof(listNode));
+	if(*h == NULL) // 메모리를 할당받지 못했을 경우
+	{
+		printf("Error! : 메모리를 할당받지 못했습니다.\n");
+		return -1;
+	}
+	
 	(*h)->rlink = *h;
 	(*h)->llink = *h;
 	(*h)->key = -9999;
