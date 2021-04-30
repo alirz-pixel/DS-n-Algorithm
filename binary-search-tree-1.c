@@ -245,7 +245,11 @@ int deleteLeafNode(Node* head, int key)
 
 Node* searchRecursive(Node* ptr, int key)
 {
+	if (ptr == NULL) return NULL; // 트리에 아무 데이터도 없거나 탐색에 실패할 경우, NULL 반환
+	if (ptr->key > key) return searchRecursive(ptr->left, key);  // 현재 노드의 key값보다 입력받은 key값이 작은 경우, 왼쪽 서브 트리 탐색
+	if (ptr->key < key) return searchRecursive(ptr->right, key); // 현재 노드의 key값보다 입력받은 key값이 큰 경우, 오른쪽 서브 트리 탐색
 
+	return ptr; // 탐색에 성공한 경우, 찾은 노드의 주소를 반환한다.
 }
 
 Node* searchIterative(Node* head, int key)
