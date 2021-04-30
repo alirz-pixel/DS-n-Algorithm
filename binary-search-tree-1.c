@@ -243,13 +243,53 @@ Node* searchIterative(Node* head, int key)
 
 int freeBST(Node* head)
 {
-
+	
 	// head의 메모리가 할당되어 있지 않은 경우
 	if (head == NULL)
 	{
 		printf("Error! : 할당된 메모리가 존재하지 않아 freeBST를 수행하지 못했습니다.\n");
 		return -1;
 	}
+
+	
+	Node *searchNode, *previous;
+	int i = 0;
+	
+	// Postorder Traversal 로 탐색하며, 메모리를 해제한다.
+	while (head->left != NULL) // 루트 노드가 NULL일 때까지 반복
+	{
+		previous = head;
+		searchNode = head->left;
+
+		// searchNode가 left node 일 때까지 반복
+		while (searchNode->left != NULL || searchNode->right != NULL)
+		{
+			previous = searchNode;
+
+			if (searchNode->left != NULL) // 왼쪽 서브 트리부터 탐색을 시작한다.
+				searchNode = searchNode->left;
+
+			else // 왼쪽 자식 노드가 NULL일 경우, 오른쪽 서브 트리를 탐색한다.
+				searchNode = searchNode->right;
+		}
+		free(searchNode); // leaf node 메모리 해제 또는 루트 노드 메모리 해제
+
+
+		// 루트 노드일 때 반복문 빠져나오기 (루트 노드일 때, previous는 head를 가리킴)
+		if (previous == head) 
+			break;
+
+		// 삭제한 leaf node의 연결 끊어주는 역할
+		// 왼쪽 자식 노드의 메모리를 해제한 후, 이 부모 노드의 left를 NULL로 만들어준다.
+		else if (previous->left != NULL)
+			previous->left = NULL;
+
+		// 오른쪽 자식 노드의 메모리를 해제한 후, 이 부모 노드의 right를 NULL로 만들어준다.
+		else if (previous->right != NULL)
+			previous->right = NULL;
+	}
+
+	free(head); // head node 메모리 해제
 }
 
 
