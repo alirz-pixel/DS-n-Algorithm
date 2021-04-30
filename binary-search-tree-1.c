@@ -255,8 +255,42 @@ Node* searchRecursive(Node* ptr, int key)
 Node* searchIterative(Node* head, int key)
 {
 
-	// head의 메모리가 할당되어 있지 않은 경우
+	// 트리에 아무 데이터가 없거나 head의 메모리가 할당되어 있지 않은 경우
 	if (head == NULL) return NULL;
+	if (head->left == NULL) return NULL;
+
+
+	Node *searchNode = head->left; // saerchNode를 루트 노드로 설정
+	while (searchNode->left != NULL || searchNode->right != NULL) // searchNode가 leaf node일 때까지 반복
+	{
+		// 현재 노드의 key값과 입력받은 key값이 같은 경우, 반복문 종료
+		if (searchNode->key == key) break; 
+
+		// searchNode의 key 값보다 입력받은 key 값이 큰 경우
+		if (searchNode->key < key)
+		{
+			// 만약, serahcNode의 오른쪽 자식 노드가 없는 경우, 탐색에 실패했으므로 NULL 반환
+			if (searchNode->right == NULL)
+				return NULL;
+			
+			// 아닐 경우, searchNode의 오른쪽 서브 트리 탐색
+			searchNode = searchNode->right;
+		} 
+			
+		else 
+		{
+			// 만약, serahcNode의 왼쪽 자식 노드가 없는 경우, 탐색에 실패했으므로 NULL 반환
+			if (searchNode->left == NULL)
+				return NULL;
+
+			// 아닐 경우, seasrchNode의 왼쪽 서브 트리 탐색
+			searchNode = searchNode->left;
+		}
+	}
+
+	// 탐색에 성공한 경우, 찾은 노드의 주소를 반환한다.
+	if (searchNode->key == key) return searchNode;
+	return NULL;
 }
 
 
