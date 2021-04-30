@@ -152,8 +152,13 @@ void preorderTraversal(Node* ptr)
 }
 
 void postorderTraversal(Node* ptr)
-{
-
+{   // 후위 순회는 왼쪽 서브 트리 -> 오른쪽 서브 트리 -> 노드 방문 순으로 진행되므로
+	if (ptr != NULL)
+	{
+		postorderTraversal(ptr->left);  // 왼쪽 서브 트리를 후위 순회한다.
+		postorderTraversal(ptr->right); // 오른쪽 서브 트리를 후위 순회한다.
+		printf("[ %d ] ", ptr->key);    // 노드를 방문한다.
+	}
 }
 
 
