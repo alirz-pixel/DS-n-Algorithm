@@ -132,7 +132,7 @@ int initializeBST(Node** h) {
 
 
 void inorderTraversal(Node* ptr)
-{
+{   
 
 }
 
@@ -157,6 +157,64 @@ int insert(Node* head, int key)
 		return -1;
 	}
 
+	Node *newNode = (Node*)malloc(sizeof(Node));
+	if (newNode == NULL) // 메모리를 할당받지 못했을 경우
+	{
+		printf("Error! : 메모리를 할당받지 못해 insert를 제대로 수행하지 못하였습니다.\n");
+		return -1;
+	}
+
+	newNode->key = key;
+	newNode->left = newNode->right = NULL;
+
+	// 트리에 아무 데이터도 없을 경우, newNode를 루트노드로 설정한다.
+	if (head->left == NULL)
+		head->left = newNode;
+	
+	else
+	{
+		Node *searchNode = head->left; // searchNode를 루트 노드로 설정함
+
+		// searchNode가 리프 노드이거나 searchNode의 key값과 입력받은 key값이 같을 때까지 반복
+		while ((searchNode->left != NULL || searchNode->right != NULL) && searchNode->key != key)
+		{
+			// searchNode의 key 값보다 입력받은 key 값이 큰 경우
+			if (searchNode->key < key) 
+			{
+				if (searchNode->right == NULL)  // 이 노드 오른쪽에 newNode를 삽입해야 하므로 반복문 종료
+					break;
+
+				searchNode = searchNode->right; // searchNode가 리프 노드가 아닐 경우, searchNode의 오른쪽 서브 트리 탐색
+			}
+
+			// searchNode의 key 값보다 입력받은 key 값이 큰 경우
+			else 
+			{
+				if (searchNode->left == NULL)  // 이 노드 왼쪽에 newNode를 삽입해야 하므로 반복문 종료
+					break;
+
+				searchNode = searchNode->left; // searchNode가 리프 노드가 아닐 경우, searchNode의 왼쪽 서브 트리 탐색
+			}
+		}
+
+		
+		// 트리에 이미 있는 값을 입력받은 경우, 삽입을 진행하지 않고 함수를 종료한다.
+		if (searchNode->key == key)
+		{
+			printf("Error! : 트리에 이미 추가되어 있는 key 값입니다.\n");
+			return -1;
+		}
+
+		// searchNode의 key값 보다 입력받은 key값이 크므로 오른쪽에 노드를 삽입한다.
+		if (searchNode->key < key) 
+			searchNode->right = newNode;
+
+		// searchNode의 key값 보다 입력받은 key값이 작으므로 왼쪽에 노드를 삽입한다.
+		else 
+			searchNode->left = newNode;
+	}
+
+	return 1;
 }
 
 int deleteLeafNode(Node* head, int key)
