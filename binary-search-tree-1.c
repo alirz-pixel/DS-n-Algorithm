@@ -117,6 +117,12 @@ int initializeBST(Node** h) {
 
 	/* create a head node */
 	*h = (Node*)malloc(sizeof(Node));
+	if (*h == NULL) // 메모리를 할당받지 못했을 경우
+	{
+		printf("Error! : 메모리를 할당받지 못하였습니다.\n");
+		return -1;
+	}
+
 	(*h)->left = NULL;	/* root */
 	(*h)->right = *h;
 	(*h)->key = -9999;
@@ -144,11 +150,24 @@ void postorderTraversal(Node* ptr)
 int insert(Node* head, int key)
 {
 
+	// initializeBST가 제대로 수행되지 않았을 경우
+	if (head == NULL)
+	{
+		printf("Error! : initializeBST가 제대로 수행되었는지 확인해 주세요.\n");
+		return -1;
+	}
+
 }
 
 int deleteLeafNode(Node* head, int key)
 {
 
+	// initializeBST가 제대로 수행되지 않았을 경우
+	if (head == NULL)
+	{
+		printf("Error! : initializeBST가 제대로 수행되었는지 확인해 주세요.\n");
+		return -1;
+	}
 }
 
 Node* searchRecursive(Node* ptr, int key)
@@ -159,12 +178,20 @@ Node* searchRecursive(Node* ptr, int key)
 Node* searchIterative(Node* head, int key)
 {
 
+	// head의 메모리가 할당되어 있지 않은 경우
+	if (head == NULL) return NULL;
 }
 
 
 int freeBST(Node* head)
 {
 
+	// head의 메모리가 할당되어 있지 않은 경우
+	if (head == NULL)
+	{
+		printf("Error! : 할당된 메모리가 존재하지 않아 freeBST를 수행하지 못했습니다.\n");
+		return -1;
+	}
 }
 
 
