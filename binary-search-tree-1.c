@@ -117,9 +117,9 @@ int initializeBST(Node** h) {
 
 	/* create a head node */
 	*h = (Node*)malloc(sizeof(Node));
-	if (*h == NULL) // ë©”ëª¨ë¦¬ë¥¼ í• ë‹¹ë°›ì§€ ëª»í–ˆì„ ê²½ìš°
+	if (*h == NULL) // ¸Þ¸ð¸®¸¦ ÇÒ´ç¹ÞÁö ¸øÇßÀ» °æ¿ì
 	{
-		printf("Error! : ë©”ëª¨ë¦¬ë¥¼ í• ë‹¹ë°›ì§€ ëª»í•˜ì˜€ìŠµë‹ˆë‹¤.\n");
+		printf("Error! : ¸Þ¸ð¸®¸¦ ÇÒ´ç¹ÞÁö ¸øÇÏ¿´½À´Ï´Ù.\n");
 		return -1;
 	}
 
@@ -132,32 +132,32 @@ int initializeBST(Node** h) {
 
 
 void inorderTraversal(Node* ptr)
-{   // ì¤‘ìœ„ìˆœíšŒëŠ” ì™¼ìª½ ì„œë¸Œ íŠ¸ë¦¬ -> ë…¸ë“œ ë°©ë¬¸ -> ì˜¤ë¥¸ìª½ ì„œë¸Œ íŠ¸ë¦¬ ìˆœìœ¼ë¡œ ì§„í–‰ë˜ë¯€ë¡œ
+{   // ÁßÀ§¼øÈ¸´Â ¿ÞÂÊ ¼­ºê Æ®¸® -> ³ëµå ¹æ¹® -> ¿À¸¥ÂÊ ¼­ºê Æ®¸® ¼øÀ¸·Î ÁøÇàµÇ¹Ç·Î
 	if (ptr != NULL)
 	{
-		inorderTraversal(ptr->left);  // ì™¼ìª½ ì„œë¸Œ íŠ¸ë¦¬ë¥¼ ì¤‘ìœ„ ìˆœíšŒ í•œë‹¤.
-		printf("[ %d ] ", ptr->key);  // ë…¸ë“œë¥¼ ë°©ë¬¸í•œë‹¤.
-		inorderTraversal(ptr->right); // ì˜¤ë¥¸ìª½ ì„œë¸Œ íŠ¸ë¦¬ë¥¼ ì¤‘ìœ„ ìˆœíšŒ í•œë‹¤.
+		inorderTraversal(ptr->left);  // ¿ÞÂÊ ¼­ºê Æ®¸®¸¦ ÁßÀ§ ¼øÈ¸ ÇÑ´Ù.
+		printf("[ %d ] ", ptr->key);  // ³ëµå¸¦ ¹æ¹®ÇÑ´Ù.
+		inorderTraversal(ptr->right); // ¿À¸¥ÂÊ ¼­ºê Æ®¸®¸¦ ÁßÀ§ ¼øÈ¸ ÇÑ´Ù.
 	}
 }
 
 void preorderTraversal(Node* ptr)
-{   // ì „ìœ„ìˆœíšŒëŠ” ë…¸ë“œ ë°©ë¬¸ -> ì™¼ìª½ ì„œë¸Œ íŠ¸ë¦¬ -> ì˜¤ë¥¸ìª½ ì„œë¸Œ íŠ¸ë¦¬ ìˆœìœ¼ë¡œ ì§„í–‰ë˜ë¯€ë¡œ
+{   // ÀüÀ§¼øÈ¸´Â ³ëµå ¹æ¹® -> ¿ÞÂÊ ¼­ºê Æ®¸® -> ¿À¸¥ÂÊ ¼­ºê Æ®¸® ¼øÀ¸·Î ÁøÇàµÇ¹Ç·Î
 	if (ptr != NULL)
 	{
-		printf("[ %d ] ", ptr->key);   // ë…¸ë“œë¥¼ ë°©ë¬¸í•œë‹¤.
-		preorderTraversal(ptr->left);  // ì™¼ìª½ ì„œë¸Œ íŠ¸ë¦¬ë¥¼ ì „ìœ„ ìˆœíšŒí•œë‹¤.
-		preorderTraversal(ptr->right); // ì˜¤ë¥¸ìª½ ì„œë¸Œ íŠ¸ë¦¬ë¥¼ ì „ìœ„ ìˆœíšŒí•œë‹¤.
+		printf("[ %d ] ", ptr->key);   // ³ëµå¸¦ ¹æ¹®ÇÑ´Ù.
+		preorderTraversal(ptr->left);  // ¿ÞÂÊ ¼­ºê Æ®¸®¸¦ ÀüÀ§ ¼øÈ¸ÇÑ´Ù.
+		preorderTraversal(ptr->right); // ¿À¸¥ÂÊ ¼­ºê Æ®¸®¸¦ ÀüÀ§ ¼øÈ¸ÇÑ´Ù.
 	}
 }
 
 void postorderTraversal(Node* ptr)
-{   // í›„ìœ„ ìˆœíšŒëŠ” ì™¼ìª½ ì„œë¸Œ íŠ¸ë¦¬ -> ì˜¤ë¥¸ìª½ ì„œë¸Œ íŠ¸ë¦¬ -> ë…¸ë“œ ë°©ë¬¸ ìˆœìœ¼ë¡œ ì§„í–‰ë˜ë¯€ë¡œ
+{   // ÈÄÀ§ ¼øÈ¸´Â ¿ÞÂÊ ¼­ºê Æ®¸® -> ¿À¸¥ÂÊ ¼­ºê Æ®¸® -> ³ëµå ¹æ¹® ¼øÀ¸·Î ÁøÇàµÇ¹Ç·Î
 	if (ptr != NULL)
 	{
-		postorderTraversal(ptr->left);  // ì™¼ìª½ ì„œë¸Œ íŠ¸ë¦¬ë¥¼ í›„ìœ„ ìˆœíšŒí•œë‹¤.
-		postorderTraversal(ptr->right); // ì˜¤ë¥¸ìª½ ì„œë¸Œ íŠ¸ë¦¬ë¥¼ í›„ìœ„ ìˆœíšŒí•œë‹¤.
-		printf("[ %d ] ", ptr->key);    // ë…¸ë“œë¥¼ ë°©ë¬¸í•œë‹¤.
+		postorderTraversal(ptr->left);  // ¿ÞÂÊ ¼­ºê Æ®¸®¸¦ ÈÄÀ§ ¼øÈ¸ÇÑ´Ù.
+		postorderTraversal(ptr->right); // ¿À¸¥ÂÊ ¼­ºê Æ®¸®¸¦ ÈÄÀ§ ¼øÈ¸ÇÑ´Ù.
+		printf("[ %d ] ", ptr->key);    // ³ëµå¸¦ ¹æ¹®ÇÑ´Ù.
 	}
 }
 
@@ -165,66 +165,66 @@ void postorderTraversal(Node* ptr)
 int insert(Node* head, int key)
 {
 
-	// initializeBSTê°€ ì œëŒ€ë¡œ ìˆ˜í–‰ë˜ì§€ ì•Šì•˜ì„ ê²½ìš°
+	// initializeBST°¡ Á¦´ë·Î ¼öÇàµÇÁö ¾Ê¾ÒÀ» °æ¿ì
 	if (head == NULL)
 	{
-		printf("Error! : initializeBSTê°€ ì œëŒ€ë¡œ ìˆ˜í–‰ë˜ì—ˆëŠ”ì§€ í™•ì¸í•´ ì£¼ì„¸ìš”.\n");
+		printf("Error! : initializeBST°¡ Á¦´ë·Î ¼öÇàµÇ¾ú´ÂÁö È®ÀÎÇØ ÁÖ¼¼¿ä.\n");
 		return -1;
 	}
 
 	Node *newNode = (Node*)malloc(sizeof(Node));
-	if (newNode == NULL) // ë©”ëª¨ë¦¬ë¥¼ í• ë‹¹ë°›ì§€ ëª»í–ˆì„ ê²½ìš°
+	if (newNode == NULL) // ¸Þ¸ð¸®¸¦ ÇÒ´ç¹ÞÁö ¸øÇßÀ» °æ¿ì
 	{
-		printf("Error! : ë©”ëª¨ë¦¬ë¥¼ í• ë‹¹ë°›ì§€ ëª»í•´ insertë¥¼ ì œëŒ€ë¡œ ìˆ˜í–‰í•˜ì§€ ëª»í•˜ì˜€ìŠµë‹ˆë‹¤.\n");
+		printf("Error! : ¸Þ¸ð¸®¸¦ ÇÒ´ç¹ÞÁö ¸øÇØ insert¸¦ Á¦´ë·Î ¼öÇàÇÏÁö ¸øÇÏ¿´½À´Ï´Ù.\n");
 		return -1;
 	}
 
 	newNode->key = key;
 	newNode->left = newNode->right = NULL;
 
-	// íŠ¸ë¦¬ì— ì•„ë¬´ ë°ì´í„°ë„ ì—†ì„ ê²½ìš°, newNodeë¥¼ ë£¨íŠ¸ë…¸ë“œë¡œ ì„¤ì •í•œë‹¤.
+	// Æ®¸®¿¡ ¾Æ¹« µ¥ÀÌÅÍµµ ¾øÀ» °æ¿ì, newNode¸¦ ·çÆ®³ëµå·Î ¼³Á¤ÇÑ´Ù.
 	if (head->left == NULL)
 		head->left = newNode;
 	
 	else
 	{
-		Node *searchNode = head->left; // searchNodeë¥¼ ë£¨íŠ¸ ë…¸ë“œë¡œ ì„¤ì •í•¨
+		Node *searchNode = head->left; // searchNode¸¦ ·çÆ® ³ëµå·Î ¼³Á¤ÇÔ
 
-		// searchNodeê°€ ë¦¬í”„ ë…¸ë“œì´ê±°ë‚˜ searchNodeì˜ keyê°’ê³¼ ìž…ë ¥ë°›ì€ keyê°’ì´ ê°™ì„ ë•Œê¹Œì§€ ë°˜ë³µ
+		// searchNode°¡ ¸®ÇÁ ³ëµåÀÌ°Å³ª searchNodeÀÇ key°ª°ú ÀÔ·Â¹ÞÀº key°ªÀÌ °°À» ¶§±îÁö ¹Ýº¹
 		while ((searchNode->left != NULL || searchNode->right != NULL) && searchNode->key != key)
 		{
-			// searchNodeì˜ key ê°’ë³´ë‹¤ ìž…ë ¥ë°›ì€ key ê°’ì´ í° ê²½ìš°
+			// searchNodeÀÇ key °ªº¸´Ù ÀÔ·Â¹ÞÀº key °ªÀÌ Å« °æ¿ì
 			if (searchNode->key < key) 
 			{
-				if (searchNode->right == NULL)  // ì´ ë…¸ë“œ ì˜¤ë¥¸ìª½ì— newNodeë¥¼ ì‚½ìž…í•´ì•¼ í•˜ë¯€ë¡œ ë°˜ë³µë¬¸ ì¢…ë£Œ
+				if (searchNode->right == NULL)  // ÀÌ ³ëµå ¿À¸¥ÂÊ¿¡ newNode¸¦ »ðÀÔÇØ¾ß ÇÏ¹Ç·Î ¹Ýº¹¹® Á¾·á
 					break;
 
-				searchNode = searchNode->right; // searchNodeê°€ ë¦¬í”„ ë…¸ë“œê°€ ì•„ë‹ ê²½ìš°, searchNodeì˜ ì˜¤ë¥¸ìª½ ì„œë¸Œ íŠ¸ë¦¬ íƒìƒ‰
+				searchNode = searchNode->right; // searchNode°¡ ¸®ÇÁ ³ëµå°¡ ¾Æ´Ò °æ¿ì, searchNodeÀÇ ¿À¸¥ÂÊ ¼­ºê Æ®¸® Å½»ö
 			}
 
-			// searchNodeì˜ key ê°’ë³´ë‹¤ ìž…ë ¥ë°›ì€ key ê°’ì´ í° ê²½ìš°
+			// searchNodeÀÇ key °ªº¸´Ù ÀÔ·Â¹ÞÀº key °ªÀÌ Å« °æ¿ì
 			else 
 			{
-				if (searchNode->left == NULL)  // ì´ ë…¸ë“œ ì™¼ìª½ì— newNodeë¥¼ ì‚½ìž…í•´ì•¼ í•˜ë¯€ë¡œ ë°˜ë³µë¬¸ ì¢…ë£Œ
+				if (searchNode->left == NULL)  // ÀÌ ³ëµå ¿ÞÂÊ¿¡ newNode¸¦ »ðÀÔÇØ¾ß ÇÏ¹Ç·Î ¹Ýº¹¹® Á¾·á
 					break;
 
-				searchNode = searchNode->left; // searchNodeê°€ ë¦¬í”„ ë…¸ë“œê°€ ì•„ë‹ ê²½ìš°, searchNodeì˜ ì™¼ìª½ ì„œë¸Œ íŠ¸ë¦¬ íƒìƒ‰
+				searchNode = searchNode->left; // searchNode°¡ ¸®ÇÁ ³ëµå°¡ ¾Æ´Ò °æ¿ì, searchNodeÀÇ ¿ÞÂÊ ¼­ºê Æ®¸® Å½»ö
 			}
 		}
 
 		
-		// íŠ¸ë¦¬ì— ì´ë¯¸ ìžˆëŠ” ê°’ì„ ìž…ë ¥ë°›ì€ ê²½ìš°, ì‚½ìž…ì„ ì§„í–‰í•˜ì§€ ì•Šê³  í•¨ìˆ˜ë¥¼ ì¢…ë£Œí•œë‹¤.
+		// Æ®¸®¿¡ ÀÌ¹Ì ÀÖ´Â °ªÀ» ÀÔ·Â¹ÞÀº °æ¿ì, »ðÀÔÀ» ÁøÇàÇÏÁö ¾Ê°í ÇÔ¼ö¸¦ Á¾·áÇÑ´Ù.
 		if (searchNode->key == key)
 		{
-			printf("Error! : íŠ¸ë¦¬ì— ì´ë¯¸ ì¶”ê°€ë˜ì–´ ìžˆëŠ” key ê°’ìž…ë‹ˆë‹¤.\n");
+			printf("Error! : Æ®¸®¿¡ ÀÌ¹Ì Ãß°¡µÇ¾î ÀÖ´Â key °ªÀÔ´Ï´Ù.\n");
 			return -1;
 		}
 
-		// searchNodeì˜ keyê°’ ë³´ë‹¤ ìž…ë ¥ë°›ì€ keyê°’ì´ í¬ë¯€ë¡œ ì˜¤ë¥¸ìª½ì— ë…¸ë“œë¥¼ ì‚½ìž…í•œë‹¤.
+		// searchNodeÀÇ key°ª º¸´Ù ÀÔ·Â¹ÞÀº key°ªÀÌ Å©¹Ç·Î ¿À¸¥ÂÊ¿¡ ³ëµå¸¦ »ðÀÔÇÑ´Ù.
 		if (searchNode->key < key) 
 			searchNode->right = newNode;
 
-		// searchNodeì˜ keyê°’ ë³´ë‹¤ ìž…ë ¥ë°›ì€ keyê°’ì´ ìž‘ìœ¼ë¯€ë¡œ ì™¼ìª½ì— ë…¸ë“œë¥¼ ì‚½ìž…í•œë‹¤.
+		// searchNodeÀÇ key°ª º¸´Ù ÀÔ·Â¹ÞÀº key°ªÀÌ ÀÛÀ¸¹Ç·Î ¿ÞÂÊ¿¡ ³ëµå¸¦ »ðÀÔÇÑ´Ù.
 		else 
 			searchNode->left = newNode;
 	}
@@ -235,17 +235,17 @@ int insert(Node* head, int key)
 int deleteLeafNode(Node* head, int key)
 {
 
-	// initializeBSTê°€ ì œëŒ€ë¡œ ìˆ˜í–‰ë˜ì§€ ì•Šì•˜ì„ ê²½ìš°
+	// initializeBST°¡ Á¦´ë·Î ¼öÇàµÇÁö ¾Ê¾ÒÀ» °æ¿ì
 	if (head == NULL)
 	{
-		printf("Error! : initializeBSTê°€ ì œëŒ€ë¡œ ìˆ˜í–‰ë˜ì—ˆëŠ”ì§€ í™•ì¸í•´ ì£¼ì„¸ìš”.\n");
+		printf("Error! : initializeBST°¡ Á¦´ë·Î ¼öÇàµÇ¾ú´ÂÁö È®ÀÎÇØ ÁÖ¼¼¿ä.\n");
 		return -1;
 	}
 
-	// íŠ¸ë¦¬ì— ì•„ë¬´ ë°ì´í„°ë„ ì—†ì„ ê²½ìš°
+	// Æ®¸®¿¡ ¾Æ¹« µ¥ÀÌÅÍµµ ¾øÀ» °æ¿ì
 	if (head->left == NULL)
 	{
-		printf("Error! : íŠ¸ë¦¬ì— ì•„ë¬´ ë°ì´í„°ë„ ì—†ìŠµë‹ˆë‹¤.\n");
+		printf("Error! : Æ®¸®¿¡ ¾Æ¹« µ¥ÀÌÅÍµµ ¾ø½À´Ï´Ù.\n");
 		return -1;
 	}
 
@@ -253,44 +253,45 @@ int deleteLeafNode(Node* head, int key)
 	Node *previous = head;
 	Node *searchNode = head->left; 
 
-	// searchNodeê°€ left node ì¼ ë•Œê¹Œì§€ ë°˜ë³µ
+	// searchNode°¡ left node ÀÏ ¶§±îÁö ¹Ýº¹
 	while (searchNode->left != NULL || searchNode->right != NULL)
 	{
 		previous = searchNode;
 
-		// í˜„ìž¬ ë…¸ë“œì˜ keyê°’ê³¼ ìž…ë ¥ë°›ì€ keyê°’ì´ ê°™ì€ ê²½ìš°, ë°˜ë³µë¬¸ ì¢…ë£Œ
+		// ÇöÀç ³ëµåÀÇ key°ª°ú ÀÔ·Â¹ÞÀº key°ªÀÌ °°Àº °æ¿ì, ¹Ýº¹¹® Á¾·á
 		if (searchNode->key == key) break;
 
-		// searchNodeì˜ key ê°’ë³´ë‹¤ ìž…ë ¥ë°›ì€ key ê°’ì´ í° ê²½ìš°
+		// searchNodeÀÇ key °ªº¸´Ù ÀÔ·Â¹ÞÀº key °ªÀÌ Å« °æ¿ì
 		if (searchNode->key < key)
 		{
-			// ë§Œì•½, serahcNodeì˜ ì˜¤ë¥¸ìª½ ìžì‹ ë…¸ë“œê°€ ì—†ëŠ” ê²½ìš°
+			// ¸¸¾à, serahcNodeÀÇ ¿À¸¥ÂÊ ÀÚ½Ä ³ëµå°¡ ¾ø´Â °æ¿ì
 			if (searchNode->right == NULL)
-			{
-				printf("ì‚­ì œí•˜ê³ ìž í•˜ëŠ” ë…¸ë“œê°€ íŠ¸ë¦¬ì— ì—†ìŠµë‹ˆë‹¤.\n");
-				return -1;
-			}
+				break;
 			
-			// ì•„ë‹ ê²½ìš°, searchNodeì˜ ì˜¤ë¥¸ìª½ ì„œë¸Œ íŠ¸ë¦¬ íƒìƒ‰
+			// ¾Æ´Ò °æ¿ì, searchNodeÀÇ ¿À¸¥ÂÊ ¼­ºê Æ®¸® Å½»ö
 			searchNode = searchNode->right;
 		}
 
-		// searchNodeì˜ keyê°’ì´ ìž…ë ¥ë°›ì€ keyê°’ë³´ë‹¤ ìž‘ì€ ê²½ìš°
+		// searchNodeÀÇ key°ªÀÌ ÀÔ·Â¹ÞÀº key°ªº¸´Ù ÀÛÀº °æ¿ì
 		else 
 		{
-			// ë§Œì•½, serahcNodeì˜ ì™¼ìª½ ìžì‹ ë…¸ë“œê°€ ì—†ëŠ” ê²½ìš°
+			// ¸¸¾à, serahcNodeÀÇ ¿ÞÂÊ ÀÚ½Ä ³ëµå°¡ ¾ø´Â °æ¿ì
 			if (searchNode->left == NULL)
-			{
-				printf("ì‚­ì œí•˜ê³ ìž í•˜ëŠ” ë…¸ë“œê°€ íŠ¸ë¦¬ì— ì—†ìŠµë‹ˆë‹¤.\n");
-				return -1;
-			}
+				break;
 
-			// ì•„ë‹ ê²½ìš°, seasrchNodeì˜ ì™¼ìª½ ì„œë¸Œ íŠ¸ë¦¬ íƒìƒ‰
+			// ¾Æ´Ò °æ¿ì, seasrchNodeÀÇ ¿ÞÂÊ ¼­ºê Æ®¸® Å½»ö
 			searchNode = searchNode->left;
 		}
 	}
 
-	// ìž…ë ¥ë°›ì€ keyê°’ê³¼ ë™ì¼í•œ keyê°’ì„ ê°€ì§€ëŠ” ë…¸ë“œëŠ” ì°¾ì•˜ìœ¼ë‚˜, leaf nodeê°€ ì•„ë‹Œ ê²½ìš°
+	// »èÁ¦ÇÏ°íÀÚ ÇÏ´Â key°ªÀÌ ¾ø´Â °æ¿ì
+	if (searchNode->key != key)
+	{
+		printf("»èÁ¦ÇÏ°íÀÚ ÇÏ´Â ³ëµå°¡ Æ®¸®¿¡ ¾ø½À´Ï´Ù.\n");
+		return -1;
+	}
+
+	// ÀÔ·Â¹ÞÀº key°ª°ú µ¿ÀÏÇÑ key°ªÀ» °¡Áö´Â ³ëµå´Â Ã£¾ÒÀ¸³ª, leaf node°¡ ¾Æ´Ñ °æ¿ì
 	if (searchNode->left != NULL || searchNode->right != NULL)
 	{
 		printf("the node [%d] is not a leaf\n", searchNode->key);
@@ -300,15 +301,15 @@ int deleteLeafNode(Node* head, int key)
 	
 	free(searchNode);
 
-	// ë£¨íŠ¸ ë…¸ë“œì¼ ë•Œ
+	// ·çÆ® ³ëµåÀÏ ¶§
 	if (previous == head)
 		head->left = NULL;
 	
-	// ì˜¤ë¥¸ìª½ ìžì‹ ë…¸ë“œì˜ ë©”ëª¨ë¦¬ë¥¼ í•´ì œí•œ í›„, ì´ ë¶€ëª¨ ë…¸ë“œì˜ rightë¥¼ NULLë¡œ ë§Œë“¤ì–´ì¤€ë‹¤.
+	// ¿À¸¥ÂÊ ÀÚ½Ä ³ëµåÀÇ ¸Þ¸ð¸®¸¦ ÇØÁ¦ÇÑ ÈÄ, ÀÌ ºÎ¸ð ³ëµåÀÇ right¸¦ NULL·Î ¸¸µé¾îÁØ´Ù.
 	else if (previous->key < key)
 		previous->right = NULL;
 
-	// ì™¼ìª½ ìžì‹ ë…¸ë“œì˜ ë©”ëª¨ë¦¬ë¥¼ í•´ì œí•œ í›„, ì´ ë¶€ëª¨ ë…¸ë“œì˜ leftë¥¼ NULLë¡œ ë§Œë“¤ì–´ì¤€ë‹¤.
+	// ¿ÞÂÊ ÀÚ½Ä ³ëµåÀÇ ¸Þ¸ð¸®¸¦ ÇØÁ¦ÇÑ ÈÄ, ÀÌ ºÎ¸ð ³ëµåÀÇ left¸¦ NULL·Î ¸¸µé¾îÁØ´Ù.
 	else
 		previous->left = NULL;
 
@@ -317,50 +318,50 @@ int deleteLeafNode(Node* head, int key)
 
 Node* searchRecursive(Node* ptr, int key)
 {
-	if (ptr == NULL) return NULL; // íŠ¸ë¦¬ì— ì•„ë¬´ ë°ì´í„°ë„ ì—†ê±°ë‚˜ íƒìƒ‰ì— ì‹¤íŒ¨í•  ê²½ìš°, NULL ë°˜í™˜
-	if (ptr->key > key) return searchRecursive(ptr->left, key);  // í˜„ìž¬ ë…¸ë“œì˜ keyê°’ë³´ë‹¤ ìž…ë ¥ë°›ì€ keyê°’ì´ ìž‘ì€ ê²½ìš°, ì™¼ìª½ ì„œë¸Œ íŠ¸ë¦¬ íƒìƒ‰
-	if (ptr->key < key) return searchRecursive(ptr->right, key); // í˜„ìž¬ ë…¸ë“œì˜ keyê°’ë³´ë‹¤ ìž…ë ¥ë°›ì€ keyê°’ì´ í° ê²½ìš°, ì˜¤ë¥¸ìª½ ì„œë¸Œ íŠ¸ë¦¬ íƒìƒ‰
+	if (ptr == NULL) return NULL; // Æ®¸®¿¡ ¾Æ¹« µ¥ÀÌÅÍµµ ¾ø°Å³ª Å½»ö¿¡ ½ÇÆÐÇÒ °æ¿ì, NULL ¹ÝÈ¯
+	if (ptr->key > key) return searchRecursive(ptr->left, key);  // ÇöÀç ³ëµåÀÇ key°ªº¸´Ù ÀÔ·Â¹ÞÀº key°ªÀÌ ÀÛÀº °æ¿ì, ¿ÞÂÊ ¼­ºê Æ®¸® Å½»ö
+	if (ptr->key < key) return searchRecursive(ptr->right, key); // ÇöÀç ³ëµåÀÇ key°ªº¸´Ù ÀÔ·Â¹ÞÀº key°ªÀÌ Å« °æ¿ì, ¿À¸¥ÂÊ ¼­ºê Æ®¸® Å½»ö
 
-	return ptr; // íƒìƒ‰ì— ì„±ê³µí•œ ê²½ìš°, ì°¾ì€ ë…¸ë“œì˜ ì£¼ì†Œë¥¼ ë°˜í™˜í•œë‹¤.
+	return ptr; // Å½»ö¿¡ ¼º°øÇÑ °æ¿ì, Ã£Àº ³ëµåÀÇ ÁÖ¼Ò¸¦ ¹ÝÈ¯ÇÑ´Ù.
 }
 
 Node* searchIterative(Node* head, int key)
 {
 
-	// íŠ¸ë¦¬ì— ì•„ë¬´ ë°ì´í„°ê°€ ì—†ê±°ë‚˜ headì˜ ë©”ëª¨ë¦¬ê°€ í• ë‹¹ë˜ì–´ ìžˆì§€ ì•Šì€ ê²½ìš°
+	// Æ®¸®¿¡ ¾Æ¹« µ¥ÀÌÅÍ°¡ ¾ø°Å³ª headÀÇ ¸Þ¸ð¸®°¡ ÇÒ´çµÇ¾î ÀÖÁö ¾ÊÀº °æ¿ì
 	if (head == NULL) return NULL;
 	if (head->left == NULL) return NULL;
 
 
-	Node *searchNode = head->left; // saerchNodeë¥¼ ë£¨íŠ¸ ë…¸ë“œë¡œ ì„¤ì •
-	while (searchNode->left != NULL || searchNode->right != NULL) // searchNodeê°€ leaf nodeì¼ ë•Œê¹Œì§€ ë°˜ë³µ
+	Node *searchNode = head->left; // saerchNode¸¦ ·çÆ® ³ëµå·Î ¼³Á¤
+	while (searchNode->left != NULL || searchNode->right != NULL) // searchNode°¡ leaf nodeÀÏ ¶§±îÁö ¹Ýº¹
 	{
-		// í˜„ìž¬ ë…¸ë“œì˜ keyê°’ê³¼ ìž…ë ¥ë°›ì€ keyê°’ì´ ê°™ì€ ê²½ìš°, ë°˜ë³µë¬¸ ì¢…ë£Œ
+		// ÇöÀç ³ëµåÀÇ key°ª°ú ÀÔ·Â¹ÞÀº key°ªÀÌ °°Àº °æ¿ì, ¹Ýº¹¹® Á¾·á
 		if (searchNode->key == key) break; 
 
-		// searchNodeì˜ key ê°’ë³´ë‹¤ ìž…ë ¥ë°›ì€ key ê°’ì´ í° ê²½ìš°
+		// searchNodeÀÇ key °ªº¸´Ù ÀÔ·Â¹ÞÀº key °ªÀÌ Å« °æ¿ì
 		if (searchNode->key < key)
 		{
-			// ë§Œì•½, serahcNodeì˜ ì˜¤ë¥¸ìª½ ìžì‹ ë…¸ë“œê°€ ì—†ëŠ” ê²½ìš°, íƒìƒ‰ì— ì‹¤íŒ¨í–ˆìœ¼ë¯€ë¡œ NULL ë°˜í™˜
+			// ¸¸¾à, serahcNodeÀÇ ¿À¸¥ÂÊ ÀÚ½Ä ³ëµå°¡ ¾ø´Â °æ¿ì, Å½»ö¿¡ ½ÇÆÐÇßÀ¸¹Ç·Î NULL ¹ÝÈ¯
 			if (searchNode->right == NULL)
 				return NULL;
 			
-			// ì•„ë‹ ê²½ìš°, searchNodeì˜ ì˜¤ë¥¸ìª½ ì„œë¸Œ íŠ¸ë¦¬ íƒìƒ‰
+			// ¾Æ´Ò °æ¿ì, searchNodeÀÇ ¿À¸¥ÂÊ ¼­ºê Æ®¸® Å½»ö
 			searchNode = searchNode->right;
 		} 
 			
 		else 
 		{
-			// ë§Œì•½, serahcNodeì˜ ì™¼ìª½ ìžì‹ ë…¸ë“œê°€ ì—†ëŠ” ê²½ìš°, íƒìƒ‰ì— ì‹¤íŒ¨í–ˆìœ¼ë¯€ë¡œ NULL ë°˜í™˜
+			// ¸¸¾à, serahcNodeÀÇ ¿ÞÂÊ ÀÚ½Ä ³ëµå°¡ ¾ø´Â °æ¿ì, Å½»ö¿¡ ½ÇÆÐÇßÀ¸¹Ç·Î NULL ¹ÝÈ¯
 			if (searchNode->left == NULL)
 				return NULL;
 
-			// ì•„ë‹ ê²½ìš°, seasrchNodeì˜ ì™¼ìª½ ì„œë¸Œ íŠ¸ë¦¬ íƒìƒ‰
+			// ¾Æ´Ò °æ¿ì, seasrchNodeÀÇ ¿ÞÂÊ ¼­ºê Æ®¸® Å½»ö
 			searchNode = searchNode->left;
 		}
 	}
 
-	// íƒìƒ‰ì— ì„±ê³µí•œ ê²½ìš°, ì°¾ì€ ë…¸ë“œì˜ ì£¼ì†Œë¥¼ ë°˜í™˜í•œë‹¤.
+	// Å½»ö¿¡ ¼º°øÇÑ °æ¿ì, Ã£Àº ³ëµåÀÇ ÁÖ¼Ò¸¦ ¹ÝÈ¯ÇÑ´Ù.
 	if (searchNode->key == key) return searchNode;
 	return NULL;
 }
@@ -369,10 +370,10 @@ Node* searchIterative(Node* head, int key)
 int freeBST(Node* head)
 {
 
-	// headì˜ ë©”ëª¨ë¦¬ê°€ í• ë‹¹ë˜ì–´ ìžˆì§€ ì•Šì€ ê²½ìš°
+	// headÀÇ ¸Þ¸ð¸®°¡ ÇÒ´çµÇ¾î ÀÖÁö ¾ÊÀº °æ¿ì
 	if (head == NULL)
 	{
-		printf("Error! : í• ë‹¹ëœ ë©”ëª¨ë¦¬ê°€ ì¡´ìž¬í•˜ì§€ ì•Šì•„ freeBSTë¥¼ ìˆ˜í–‰í•˜ì§€ ëª»í–ˆìŠµë‹ˆë‹¤.\n");
+		printf("Error! : ÇÒ´çµÈ ¸Þ¸ð¸®°¡ Á¸ÀçÇÏÁö ¾Ê¾Æ freeBST¸¦ ¼öÇàÇÏÁö ¸øÇß½À´Ï´Ù.\n");
 		return -1;
 	}
 
@@ -380,41 +381,41 @@ int freeBST(Node* head)
 	Node *searchNode, *previous;
 	int i = 0;
 	
-	// Postorder Traversal ë¡œ íƒìƒ‰í•˜ë©°, ë©”ëª¨ë¦¬ë¥¼ í•´ì œí•œë‹¤.
-	while (head->left != NULL) // ë£¨íŠ¸ ë…¸ë“œê°€ NULLì¼ ë•Œê¹Œì§€ ë°˜ë³µ
+	// Postorder Traversal ·Î Å½»öÇÏ¸ç, ¸Þ¸ð¸®¸¦ ÇØÁ¦ÇÑ´Ù.
+	while (head->left != NULL) // ·çÆ® ³ëµå°¡ NULLÀÏ ¶§±îÁö ¹Ýº¹
 	{
 		previous = head;
 		searchNode = head->left;
 
-		// searchNodeê°€ left node ì¼ ë•Œê¹Œì§€ ë°˜ë³µ
+		// searchNode°¡ left node ÀÏ ¶§±îÁö ¹Ýº¹
 		while (searchNode->left != NULL || searchNode->right != NULL)
 		{
 			previous = searchNode;
 
-			if (searchNode->left != NULL) // ì™¼ìª½ ì„œë¸Œ íŠ¸ë¦¬ë¶€í„° íƒìƒ‰ì„ ì‹œìž‘í•œë‹¤.
+			if (searchNode->left != NULL) // ¿ÞÂÊ ¼­ºê Æ®¸®ºÎÅÍ Å½»öÀ» ½ÃÀÛÇÑ´Ù.
 				searchNode = searchNode->left;
 
-			else // ì™¼ìª½ ìžì‹ ë…¸ë“œê°€ NULLì¼ ê²½ìš°, ì˜¤ë¥¸ìª½ ì„œë¸Œ íŠ¸ë¦¬ë¥¼ íƒìƒ‰í•œë‹¤.
+			else // ¿ÞÂÊ ÀÚ½Ä ³ëµå°¡ NULLÀÏ °æ¿ì, ¿À¸¥ÂÊ ¼­ºê Æ®¸®¸¦ Å½»öÇÑ´Ù.
 				searchNode = searchNode->right;
 		}
-		free(searchNode); // leaf node ë©”ëª¨ë¦¬ í•´ì œ ë˜ëŠ” ë£¨íŠ¸ ë…¸ë“œ ë©”ëª¨ë¦¬ í•´ì œ
+		free(searchNode); // leaf node ¸Þ¸ð¸® ÇØÁ¦ ¶Ç´Â ·çÆ® ³ëµå ¸Þ¸ð¸® ÇØÁ¦
 
 
-		// ë£¨íŠ¸ ë…¸ë“œì¼ ë•Œ ë°˜ë³µë¬¸ ë¹ ì ¸ë‚˜ì˜¤ê¸° (ë£¨íŠ¸ ë…¸ë“œì¼ ë•Œ, previousëŠ” headë¥¼ ê°€ë¦¬í‚´)
+		// ·çÆ® ³ëµåÀÏ ¶§ ¹Ýº¹¹® ºüÁ®³ª¿À±â (·çÆ® ³ëµåÀÏ ¶§, previous´Â head¸¦ °¡¸®Å´)
 		if (previous == head) 
 			break;
 
-		// ì‚­ì œí•œ leaf nodeì˜ ì—°ê²° ëŠì–´ì£¼ëŠ” ì—­í• 
-		// ì™¼ìª½ ìžì‹ ë…¸ë“œì˜ ë©”ëª¨ë¦¬ë¥¼ í•´ì œí•œ í›„, ì´ ë¶€ëª¨ ë…¸ë“œì˜ leftë¥¼ NULLë¡œ ë§Œë“¤ì–´ì¤€ë‹¤.
+		// »èÁ¦ÇÑ leaf nodeÀÇ ¿¬°á ²÷¾îÁÖ´Â ¿ªÇÒ
+		// ¿ÞÂÊ ÀÚ½Ä ³ëµåÀÇ ¸Þ¸ð¸®¸¦ ÇØÁ¦ÇÑ ÈÄ, ÀÌ ºÎ¸ð ³ëµåÀÇ left¸¦ NULL·Î ¸¸µé¾îÁØ´Ù.
 		else if (previous->left != NULL)
 			previous->left = NULL;
 
-		// ì˜¤ë¥¸ìª½ ìžì‹ ë…¸ë“œì˜ ë©”ëª¨ë¦¬ë¥¼ í•´ì œí•œ í›„, ì´ ë¶€ëª¨ ë…¸ë“œì˜ rightë¥¼ NULLë¡œ ë§Œë“¤ì–´ì¤€ë‹¤.
+		// ¿À¸¥ÂÊ ÀÚ½Ä ³ëµåÀÇ ¸Þ¸ð¸®¸¦ ÇØÁ¦ÇÑ ÈÄ, ÀÌ ºÎ¸ð ³ëµåÀÇ right¸¦ NULL·Î ¸¸µé¾îÁØ´Ù.
 		else if (previous->right != NULL)
 			previous->right = NULL;
 	}
 
-	free(head); // head node ë©”ëª¨ë¦¬ í•´ì œ
+	free(head); // head node ¸Þ¸ð¸® ÇØÁ¦
 }
 
 
