@@ -132,8 +132,13 @@ int initializeBST(Node** h) {
 
 
 void inorderTraversal(Node* ptr)
-{   
-
+{   // 중위순회는 왼쪽 서브 트리 -> 노드 방문 -> 오른쪽 서브 트리 순으로 진행되므로
+	if (ptr != NULL)
+	{
+		inorderTraversal(ptr->left);  // 왼쪽 서브 트리를 중위 순회 한다.
+		printf("[ %d ] ", ptr->key);  // 노드를 방문한다.
+		inorderTraversal(ptr->right); // 오른쪽 서브 트리를 중위 순회 한다.
+	}
 }
 
 void preorderTraversal(Node* ptr)
@@ -243,7 +248,7 @@ Node* searchIterative(Node* head, int key)
 
 int freeBST(Node* head)
 {
-	
+
 	// head의 메모리가 할당되어 있지 않은 경우
 	if (head == NULL)
 	{
