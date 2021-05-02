@@ -34,6 +34,8 @@ int freeBST(Node* head); /* free all memories allocated to the tree */
 
 int main()
 {
+	printf("[----- [ÃÖ¹®Çü] [2020039004] -----]\n");
+
 	char command;
 	int key;
 	Node* head = NULL;
