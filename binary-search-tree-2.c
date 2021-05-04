@@ -157,6 +157,20 @@ void recursiveInorder(Node* ptr)
  */
 void iterativeInorder(Node* node)
 {
+	top = -1;
+
+	while(1) // Stack is not empty 라면
+	{
+		// node가 왼쪽 서브 트리의 leaf node가 될 떄 까지 반복
+		for (; node != NULL; node = node->left) 
+			push(node);
+
+		node = pop();
+		if (node == NULL) break;
+
+		printf(" [%d] ", node->key);
+		node = node->right;
+	}
 }
 
 /**
@@ -268,10 +282,16 @@ int freeBST(Node* head)
 
 Node* pop()
 {
+	if (top == -1) // Stack is empty 라면
+		return NULL;
+
+	Node* returnNode = stack[top--];
+	return returnNode;
 }
 
 void push(Node* aNode)
 {
+	stack[++top] = aNode;
 }
 
 
@@ -286,7 +306,7 @@ void enQueue(Node* aNode)
 
 void printStack()
 {
-	
+
 }
 
 
