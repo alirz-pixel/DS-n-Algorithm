@@ -125,6 +125,11 @@ int initializeBST(Node** h) {
 
 	/* create a head node */
 	*h = (Node*)malloc(sizeof(Node));
+	if (*h == NULL) // 동적할당을 실패한 경우
+	{
+		printf("Error! : 메모리를 할당받지 못했습니다.\n");
+		return -1;
+	}
 	(*h)->left = NULL;	/* root */
 	(*h)->right = *h;
 	(*h)->key = -9999;
@@ -164,7 +169,18 @@ void levelOrder(Node* ptr)
 
 int insert(Node* head, int key)
 {
+	if (head == NULL) // initializeBST가 제대로 수행되지 않은 경우
+	{
+		printf("Error! : initializeBST가 제대로 수행되었는지 확인해 주세요!\n");
+		return -1;
+	}
+
 	Node* newNode = (Node*)malloc(sizeof(Node));
+	if (newNode == NULL) // 동적할당을 실패한 경우
+	{
+		printf("Error! : 메모리를 할당받지 못했습니다.\n");
+		return -1;
+	}
 	newNode->key = key;
 	newNode->left = NULL;
 	newNode->right = NULL;
@@ -208,6 +224,17 @@ int insert(Node* head, int key)
 
 int deleteNode(Node* head, int key)
 {
+	if (head == NULL) // initializeBST가 제대로 수행되지 않은 경우
+	{
+		printf("Error! : initializeBST가 제대로 수행되었는지 확인해 주세요!\n");
+		return -1;
+	}
+
+	if (head->left == NULL) // 트리에 아무 데이터도 없는 경우
+	{
+		printf("Error! : 트리가 비어있어 deleteNode를 수행할 수 없습니다.\n");
+		return -1;
+	}
 }
 
 
