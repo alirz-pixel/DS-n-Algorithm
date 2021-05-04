@@ -178,6 +178,24 @@ void iterativeInorder(Node* node)
  */
 void levelOrder(Node* ptr)
 {
+	front = rear = -1;    // 큐 초기화하기
+	enQueue(ptr);
+
+	while (front != rear) // 큐 안의 데이터가 비었을 떄까지 반복
+	{
+		ptr = deQueue();  
+		if (ptr == NULL) break; // 공백 트리 또는 순회를 끝낸 경우, 반복문 종료
+
+		// 레벨순서 순회도 왼쪽 자식 노드부터 탐색하므로 
+		if (ptr->left != NULL)
+			enQueue(ptr->left);
+
+		// 왼쪽 자식 노드 확인 후, 오른쪽 자식 노드도 탐색한다.
+		if (ptr->right != NULL)
+			enQueue(ptr->right);
+
+		printf(" [%d] ", ptr->key);
+	}
 }
 
 
@@ -298,15 +316,20 @@ void push(Node* aNode)
 
 Node* deQueue()
 {
+	if (front == rear) // queue is empty 라면 NULL 반환
+		return NULL;
+	
+	Node* returnNode = queue[++front]; 
+	return returnNode;
 }
 
 void enQueue(Node* aNode)
 {
+	queue[++rear] = aNode;	
 }
 
 void printStack()
 {
-
 }
 
 
