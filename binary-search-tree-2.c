@@ -56,6 +56,8 @@ void printStack();
 
 int main()
 {
+	printf("[----- [최문형] [2020039004] -----]\n");
+
 	char command;
 	int key;
 	Node* head = NULL;
