@@ -425,6 +425,11 @@ void enQueue(Node* aNode)
 
 void printStack()
 {
+	if (top == -1)
+		printf("stack is empty\n");
+
+	for (int i = top; i >= 0; i--)
+		printf(" [%d] ", stack[i]->key);
 }
 
 
