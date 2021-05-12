@@ -304,18 +304,12 @@ int deleteNode(Node* head, int key)
 	{			
 		// 트리에 루트 노드 밖에 없거나
 		// 부모 노드의 왼쪽 노드를 삭제하고자 하는 경우
-		if (previous == head || previous->key > key)
-		{
-			printf("Error! : 부모 노드 또는 왼쪽 노드를 삭제합니다.\n");	
+		if (previous == head || previous->key > key)	
 			previous->left = NULL;
-		}
 
 		// 부모 노드의 오른쪽 노드를 삭제하고자 하는 경우
 		else
-		{
-			printf("Error! : 오른쪽 노드를 삭제합니다.\n");	
 			previous->right = NULL;
-		}
 	}
 
 	// 삭제하고자 하는 노드가 하나의 자식만을 가질 때
