@@ -12,6 +12,7 @@ typedef struct node {
 
 /* List of user-defined functions */
 int initializeGS(Node** h);
+int insertVertex(Node* h, int key);
 
 
 int main(void)
@@ -43,6 +44,9 @@ int main(void)
                 break;
 
             case 'v': case 'V':
+                printf("Your Key(0~9) = ");
+                scanf("%d", &key);
+                insertVertex(headNode, key);
                 break;
                 
             case 'e': case 'E':
@@ -85,13 +89,39 @@ int initializeGS(Node** h)
         return -1;
     }
  
-    // headNode의 vertex값이 -2이면 아직 추가되지 않은 vertex로 취급하며
-    // headNode의 vertex값이 -1이면 추가된 vertex로 취급한다.
+    // headNode의 vertex값이 0이면 아직 추가되지 않은 vertex로 취급하며
+    // headNode의 vertex값이 1이면 추가된 vertex로 취급한다.
     for (int i = 0; i < MAXVERTEX; i++)
     {
-        (*h)[i].vertex = -2; // 아직 추가되지 않은 vertex로 초기화 해준다.
+        (*h)[i].vertex = 0; // 아직 추가되지 않은 vertex로 초기화 해준다.
         (*h)[i].next = NULL;
     }
 
+    return 1;
+}
+
+int insertVertex(Node* h, int key)
+{
+    if (h == NULL)
+    {
+        printf("\n Error! : initializeGS가 제대로 수행되었는지 확인해 주세요!\n");
+        return -1;
+    }
+
+
+    if (!(0 <= key && key < MAXVERTEX))
+    {
+        printf("\n Error! : 0 ~ 9사이의 값만 입력해주세요.\n");
+        return -1;
+    }
+
+    if (h[key].vertex == 1)
+    {
+        printf("\n Error! : 이미 추가되어있는 Vertex입니다.\n");
+        return -1;
+    }
+
+    printf("\n Vertex[%d] 가 추가되었습니다.\n", key);
+    h[key].vertex = 1;
     return 1;
 }
