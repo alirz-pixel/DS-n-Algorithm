@@ -13,6 +13,7 @@ typedef struct node {
 /* List of user-defined functions */
 int initializeGS(Node** h);
 int insertVertex(Node* h, int key);
+void printG(Node* h);
 
 
 int main(void)
@@ -59,6 +60,7 @@ int main(void)
                 break;
 
             case 'p': case 'P':
+                printG(headNode);
                 break;
 
             case 'q': case 'Q':
@@ -124,4 +126,38 @@ int insertVertex(Node* h, int key)
     printf("\n Vertex[%d] 가 추가되었습니다.\n", key);
     h[key].vertex = 1;
     return 1;
+}
+
+void printG(Node* h)
+{
+    printf ("\n---PRINT\n");
+
+    if (h == NULL)
+    {
+        printf("인쇄할 항목이 없습니다.\n");
+        return;
+    }
+
+
+    Node* p = NULL;
+    int cnt = 0;
+
+    for (int i = 0; i < MAXVERTEX; i++)
+    {
+        if (h[i].vertex == 1)
+        {
+            p = h[i].next;
+
+            printf(" ( Vertex %d :", i);
+            while(p != NULL)
+            {
+                printf(" [%d] ->", p->vertex);
+                p = p->next;
+            }
+            printf(" ) \n");
+
+            cnt++;
+        }
+    }
+    printf("\n  items = %d\n", cnt);
 }
