@@ -1,9 +1,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main (void)
+typedef struct node {
+
+    int vertex; // ¿¬°áµÇ¾îÀÖ´Â VertexÀÇ ¹øÈ£¸¦ ³ªÅ¸³½´Ù
+    struct node* next;
+
+} Node;
+
+#define MAXVERTEX 10
+
+/* List of user-defined functions */
+int initializeGS(Node** h);
+
+
+int main(void)
 {
-    printf("[----- [ìµœë¬¸í˜•] [2020039004] -----]\n");
+    printf("[----- [ÃÖ¹®Çü] [2020039004] -----]\n");
+
+    Node* headNode = NULL;
 
 	char command;
 	int key;
@@ -24,6 +39,7 @@ int main (void)
 
 		switch(command) {
             case 'z': case 'Z':
+                initializeGS(&headNode);
                 break;
 
             case 'v': case 'V':
@@ -49,4 +65,33 @@ int main (void)
                 break;
         }
     }while(command != 'q' && command != 'Q');
+}
+
+
+int initializeGS(Node** h)
+{
+    /*
+    freeGS°¡ ±¸ÇöµÇ¸é Ãß°¡µÉ °ø°£ÀÔ´Ï´Ù.
+    if (*h != NULL)
+        freeGS(*h);
+    */
+
+    /* crete a head node */
+    // headnodeÀÇ ¹è¿­À» NULL·Î ÃÊ±âÈ­ ÇØ¾ß µÇ±â ¶§¹®¿¡ callocÀ¸·Î µ¿ÀûÇÒ´ç
+    (*h) = (Node*)calloc(MAXVERTEX, sizeof(Node)); 
+    if ((*h) == NULL)
+    {
+        printf("Error! : µ¿ÀûÇÒ´çÀÌ Á¦´ë·Î ¼öÇàµÇÁö ¾Ê¾Ò½À´Ï´Ù.\n");
+        return -1;
+    }
+ 
+    // headNodeÀÇ vertex°ªÀÌ -2ÀÌ¸é ¾ÆÁ÷ Ãß°¡µÇÁö ¾ÊÀº vertex·Î Ãë±ÞÇÏ¸ç
+    // headNodeÀÇ vertex°ªÀÌ -1ÀÌ¸é Ãß°¡µÈ vertex·Î Ãë±ÞÇÑ´Ù.
+    for (int i = 0; i < MAXVERTEX; i++)
+    {
+        (*h)[i].vertex = -2; // ¾ÆÁ÷ Ãß°¡µÇÁö ¾ÊÀº vertex·Î ÃÊ±âÈ­ ÇØÁØ´Ù.
+        (*h)[i].next = NULL;
+    }
+
+    return 1;
 }
