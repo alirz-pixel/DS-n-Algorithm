@@ -47,15 +47,15 @@ int main(void)
                 break;
 
             case 'v': case 'V':
-                printf("Your Key(0~%d) = ", MAXVERTEX);
+                printf("Your Key(0~%d) = ", MAXVERTEX - 1);
                 scanf("%d", &key);
                 insertVertex(headNode, key);
                 break;
                 
             case 'e': case 'E':
-                printf("input Vertex 1(0~%d) : ", MAXVERTEX);
+                printf("input Vertex 1(0~%d) : ", MAXVERTEX - 1);
                 scanf("%d", &key);
-                printf("input Vertex 2(0~%d) : ", MAXVERTEX);
+                printf("input Vertex 2(0~%d) : ", MAXVERTEX - 1);
                 scanf("%d", &sec_Key);
                 insertEdge(headNode, key, sec_Key);
                 break;
@@ -128,7 +128,7 @@ int insertVertex(Node* h, int key)
 
     if (!(0 <= key && key < MAXVERTEX))
     {
-        printf("\n Error! : 0 ~ 9사이의 값만 입력해주세요.\n");
+        printf("\n Error! : 0 ~ %d사이의 값만 입력해주세요.\n", MAXVERTEX - 1);
         return -1;
     }
 
@@ -171,7 +171,7 @@ int insertEdge(Node* h, int fir_Vertex, int sec_Vertex)
     
     if (!(0 <= fir_Vertex && fir_Vertex < MAXVERTEX) || !(0 <= sec_Vertex && sec_Vertex < MAXVERTEX))
     {
-        printf("\n Error! : 0 ~ %d사이의 값만 입력해주세요.\n", MAXVERTEX);
+        printf("\n Error! : 0 ~ %d사이의 값만 입력해주세요.\n", MAXVERTEX - 1);
         return -1;
     }
 
