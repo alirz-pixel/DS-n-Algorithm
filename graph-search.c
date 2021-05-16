@@ -15,6 +15,8 @@ int initializeGS(Node** h);
 int insertVertex(Node* h, int key);
 int insertEdge(Node* h, int fir_Vertex, int sec_Vertex);
 void nodeInsert(Node* headIndex, Node* insertNode);
+int DFS(Node* h, int startVertex);
+void DFSrecursive(Node* h, int Vertex, short int* v);
 void printG(Node* h); // headIndex
 
 
@@ -61,6 +63,9 @@ int main(void)
                 break;
 
             case 'd': case 'D':
+                printf("DFS를 시작할 노드(0~%d): ", MAXVERTEX - 1);
+                scanf("%d", &key);
+                DFS(headNode, key);
                 break;
 
             case 'b': case 'B':
@@ -151,7 +156,7 @@ int insertEdge(Node* h, int fir_Vertex, int sec_Vertex)
       1. 우선 main함수에서 연결하고 싶은 두 개의 vertex를 입력받습니다.
       2. 그 후, 다양한 전처리를 통해 에러 문구를 출력시킵니다.
          (2-1. initializeGS를 제대로 하지 않은 경우)
-         (2-2. 0~9사이의 값을 입력하지 않은 경우)
+         (2-2. 0 ~ [MAXVERTEX - 1] 사이의 값을 입력하지 않은 경우)
          (2-3. 자기간선을 만드려 하는 경우)
          (2-4. 추가되어 있지 않은 vertex를 연결하려는 경우)
          (2-5. 다중 간선을 만드려 하는 경우)
@@ -262,6 +267,84 @@ void nodeInsert(Node* headIndex, Node* insertNode)
     // insertNode를 삽입하는 코드
     insertNode->next = searchNode;
     previous->next = insertNode;
+}
+
+int DFS(Node* h, int startVertex)
+{
+    /*
+      깊이 우선 탐색을 위한 함수입니다.
+
+      1. 우선 main함수에서 DFS를 시작할 vertex를 입력받습니다.
+      2. 그 후, 다양한 전처리를 통해 에러 문구를 출력시킵니다.
+         (2-1. initializeGS를 제대로 하지 않은 경우)
+         (2-2. 0 ~ [MAXVERTEX - 1] 사이의 값을 입력하지 않은 경우)
+         (2-3. 추가되어 있지 않은 vertex를 시작 vertex로 지정한 경우)
+
+      3. DFS 시작 문구를 화면에 출력합니다.
+      4. 그 후, DFSrecursive 함수를 호출해 DFS를 진행합니다.
+    */
+
+
+
+//----------------------다양한 전처리----------------------
+
+    if (h == NULL) // initializeGS가 제대로 수행되지 않은 경우
+    {
+        printf("\n Error! : initializeGS가 제대로 수행되었는지 확인해 주세요!\n");
+        return -1;
+    }
+
+    // 0 ~ [MAXVERTEX - 1] 사이의 값을 입력하지 않은 경우
+    if (!(0 <= startVertex && startVertex < MAXVERTEX)) 
+    {
+        printf("\n Error! : 0 ~ %d사이의 값만 입력해주세요.\n", MAXVERTEX - 1);
+        return -1;
+    }
+
+    if (h[startVertex].vertex == 0) // 추가되어 있지 않은 vertex를 DFS 탐색의 시작 vertex로 지정한 경우 
+    {
+        printf("\n Error! : 그래프에 [vertex %d]이(가) 추가되어 있지 않습니다.\n", startVertex);
+        return 1;
+    }
+
+//--------------------------------------------------------
+
+
+//----------------------DFS 관련 코드----------------------
+
+    // DFS탐색 시작 문구를 화면에 출력
+    printf("\n DFS(%d)을 시작합니다.\n\n", startVertex);
+
+    // 방문 처리를 위한 동적 배열 선언
+    short int* visited = (short int*)calloc(MAXVERTEX, sizeof(short int));
+    if (visited == NULL) // 동적할당이 제대로 되지 않은 경우
+    {
+        printf("\n Error! : 동적할당이 제대로 수행되지 않았습니다.\n");
+        return -1;
+    }
+    DFSrecursive(h, startVertex, visited); // DFS를 진행하기 위해 DFSrecursive 호출
+    free(visited); // DFS가 끝났으므로 방문 처리를 위해 사용된 메모리 해제
+
+//--------------------------------------------------------
+
+
+    return 1;
+}
+
+void DFSrecursive(Node* h, int Vertex, short int* v)
+{
+    /*
+      recursive방식으로 깊이 우선 탐색을 하는 함수입니다.
+    */
+
+    Node* searchNode = NULL;
+    v[Vertex] = 1;                 // 현재의 vertex를 방문처리함
+    printf(" [%d] -> ", Vertex);   // 현재의 vertex를 화면에 출력
+
+    // h[vertex]의 리스트 노드를 전부 탐색
+    for (searchNode = h[Vertex].next; searchNode; searchNode = searchNode->next)
+        if(!v[searchNode->vertex]) // searchNode의 vertex가 방문 처리되어 있지 않다면
+            DFSrecursive(h, searchNode->vertex, v); // 재귀함수 호출
 }
 
 void printG(Node* h)
