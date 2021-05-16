@@ -28,6 +28,7 @@ int BFS(Node* h, int startVertex);
 void enQueue(Node* insertNode);
 Node* deQueue();
 void printG(Node* h); // headIndex
+int freeGS(Node* h);
 
 
 int main(void)
@@ -89,6 +90,7 @@ int main(void)
                 break;
 
             case 'q': case 'Q':
+                freeGS(headNode);
                 break;
 
             default:
@@ -105,11 +107,8 @@ int initializeGS(Node** h)
     initialize 하기 위한 함수
     */
 
-    /*
-    freeGS가 구현되면 추가될 공간입니다.
     if (*h != NULL)
         freeGS(*h);
-    */
 
     /* crete a head node */
     // headnode의 배열을 NULL로 초기화 해야 되기 때문에 calloc으로 동적할당
@@ -491,4 +490,38 @@ void printG(Node* h)
         }
     }
     printf("\n  items = %d\n", cnt);
+}
+
+int freeGS(Node* h)
+{
+    // h가 NULL인 경우, freeG 함수를 수행할 필요가 없으므로 -1을 리턴한다.
+    if (h == NULL) return -1;
+
+    Node* deleteNode = NULL;
+    Node* nextNode = NULL;
+    for (int i = 0; i < MAXVERTEX; i++) // MAXVERTEX 수만큼 반복
+        if (h[i].vertex == 1) // vertex가 생성되어 있다면
+        {
+            printf("\n 헤드 노드 : [%d]\n", i);
+            printf("  삭제된 노드 : ");
+            deleteNode = NULL;
+            nextNode = h[i].next;
+
+            while(nextNode) // nextNode가 NULL일 때까지 반복
+            {
+                // 헤드노드인 h[i]에 리스트 노드가 있을 경우,
+                // 메모리의 해제는 singly-linked-list와 알고리즘이 같다
+                // 따라서 리스트 노드를 하나씩 방문하며 이전 노드의 메모리를 해제하는 방식으로 하면 된다.
+                deleteNode = nextNode; 
+                nextNode = nextNode->next;
+
+                printf("[%d]  ", deleteNode->vertex); // freeG가 잘 수행되는지 확인하는 코드.
+                free(deleteNode);
+            }
+
+            printf("\n");
+        }
+
+    free(h);
+    return 1;
 }
