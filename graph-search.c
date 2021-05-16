@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define MAXVERTEX 10
+
 typedef struct node {
 
     int vertex; // 연결되어있는 Vertex의 번호를 나타낸다
@@ -8,7 +10,12 @@ typedef struct node {
 
 } Node;
 
-#define MAXVERTEX 10
+// BFS를 했을 때, queue에 들어오게 되는 최대 VERTEX의 수는 MAXVERTEX이다.
+// 따라서 queue의 사이즈를 MAXVERTEX로 선언한다.
+Node* queue[MAXVERTEX];
+int front = -1;
+int rear = -1;
+
 
 /* List of user-defined functions */
 int initializeGS(Node** h);
@@ -17,6 +24,9 @@ int insertEdge(Node* h, int fir_Vertex, int sec_Vertex);
 void nodeInsert(Node* headIndex, Node* insertNode);
 int DFS(Node* h, int startVertex);
 void DFSrecursive(Node* h, int Vertex, short int* v);
+int BFS(Node* h, int startVertex);
+void enQueue(Node* insertNode);
+Node* deQueue();
 void printG(Node* h); // headIndex
 
 
@@ -69,6 +79,9 @@ int main(void)
                 break;
 
             case 'b': case 'B':
+                printf("BFS를 시작할 노드(0~%d): ", MAXVERTEX - 1);
+                scanf("%d", &key);
+                BFS(headNode, key);
                 break;
 
             case 'p': case 'P':
@@ -345,6 +358,101 @@ void DFSrecursive(Node* h, int Vertex, short int* v)
     for (searchNode = h[Vertex].next; searchNode; searchNode = searchNode->next)
         if(!v[searchNode->vertex]) // searchNode의 vertex가 방문 처리되어 있지 않다면
             DFSrecursive(h, searchNode->vertex, v); // 재귀함수 호출
+}
+
+int BFS(Node* h, int startVertex)
+{
+    /*
+      너비 우선 탐색을 위한 함수입니다.
+
+      1. 우선 main함수에서 BFS를 시작할 vertex를 입력받습니다.
+      2. 그 후, 다양한 전처리를 통해 에러 문구를 출력시킵니다.
+         (2-1. initializeGS를 제대로 하지 않은 경우)
+         (2-2. 0 ~ [MAXVERTEX - 1] 사이의 값을 입력하지 않은 경우)
+         (2-3. 추가되어 있지 않은 vertex를 탐색 시작 vertex로 지정한 경우)
+
+      3. BFS 시작 문구를 화면에 출력합니다.
+      4. 그 후, BFS를 진행합니다.
+    */
+
+
+
+//----------------------다양한 전처리----------------------
+
+    if (h == NULL) // initializeGS가 제대로 수행되지 않은 경우
+    {
+        printf("\n Error! : initializeGS가 제대로 수행되었는지 확인해 주세요!\n");
+        return -1;
+    }
+
+    // 0 ~ [MAXVERTEX - 1] 사이의 값을 입력하지 않은 경우
+    if (!(0 <= startVertex && startVertex < MAXVERTEX)) 
+    {
+        printf("\n Error! : 0 ~ %d사이의 값만 입력해주세요.\n", MAXVERTEX - 1);
+        return -1;
+    }
+
+    if (h[startVertex].vertex == 0) // 추가되어 있지 않은 vertex를 BFS 탐색의 시작 vertex로 지정한 경우 
+    {
+        printf("\n Error! : 그래프에 [vertex %d]이(가) 추가되어 있지 않습니다.\n", startVertex);
+        return 1;
+    }
+
+//--------------------------------------------------------
+
+
+//----------------------BFS 관련 코드----------------------
+
+    // BFS탐색 시작 문구를 화면에 출력
+    printf("\n BFS(%d)을 시작합니다.\n\n", startVertex);
+
+    // 방문 처리를 위한 동적 배열 선언
+    short int* visited = (short int*)calloc(MAXVERTEX, sizeof(short int));
+    if (visited == NULL) // 동적할당이 제대로 되지 않은 경우
+    {
+        printf("\n Error! : 동적할당이 제대로 수행되지 않았습니다.\n");
+        return -1;
+    }
+
+    // BFS 탐색을 위해 queue 초기화
+    front = -1;
+    rear = -1;
+
+    // BFS 시작
+    Node* w = NULL;
+
+    enQueue(h[startVertex].next);                // BFS 탐색의 시작 vertex를 queue에 삽입
+    visited[startVertex] = 1;                    // 시작 vertex를 방문처리를 해준다.
+    printf(" [%d] -> ", startVertex);            // 시작 vetex를 화면에 출력한다.
+
+    while(front != rear)                         // queue가 비어있다면 반복문 종료
+        for (w = deQueue(); w; w = w->next)      // 
+            if (!visited[w->vertex])
+            {
+                printf(" [%d] -> ", w->vertex);  // 현재의 vertex를 화면에 출력
+                visited[w->vertex] = 1;          // 현재의 vertex를 방문처리
+                enQueue(h[w->vertex].next);      // 현재의 vertex를 queue에 삽입한다.
+            }
+
+
+    free(visited); // BFS가 끝났으므로 방문 처리를 위해 사용된 메모리 해제
+
+//--------------------------------------------------------
+
+    return 1;
+}
+
+void enQueue(Node* insertNode)
+{
+	queue[++rear] = insertNode;	
+}
+
+Node* deQueue()
+{
+    if(front == rear) // queue가 비어있다면, NULL값 반환
+        return NULL;
+
+    return queue[++front];
 }
 
 void printG(Node* h)
