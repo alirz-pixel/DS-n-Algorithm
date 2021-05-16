@@ -205,7 +205,7 @@ int insertEdge(Node* h, int fir_Vertex, int sec_Vertex)
             printf("\n Error! : 그래프에 [vertex %d]이(가) 추가되어 있지 않습니다.\n", fir_Vertex);
         else
                 printf("\n Error! : 그래프에 [vertex %d]이(가) 추가되어 있지 않습니다.\n", sec_Vertex);
-        return 1;
+        return -1;
     }
 
     // 다중간선을 만드려 하는지 확인하는 코드
@@ -317,7 +317,7 @@ int DFS(Node* h, int startVertex)
     if (h[startVertex].vertex == 0) // 추가되어 있지 않은 vertex를 DFS 탐색의 시작 vertex로 지정한 경우 
     {
         printf("\n Error! : 그래프에 [vertex %d]이(가) 추가되어 있지 않습니다.\n", startVertex);
-        return 1;
+        return -1;
     }
 
 //--------------------------------------------------------
@@ -395,7 +395,7 @@ int BFS(Node* h, int startVertex)
     if (h[startVertex].vertex == 0) // 추가되어 있지 않은 vertex를 BFS 탐색의 시작 vertex로 지정한 경우 
     {
         printf("\n Error! : 그래프에 [vertex %d]이(가) 추가되어 있지 않습니다.\n", startVertex);
-        return 1;
+        return -1;
     }
 
 //--------------------------------------------------------
