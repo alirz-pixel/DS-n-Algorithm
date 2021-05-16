@@ -13,7 +13,9 @@ typedef struct node {
 /* List of user-defined functions */
 int initializeGS(Node** h);
 int insertVertex(Node* h, int key);
-void printG(Node* h);
+int insertEdge(Node* h, int fir_Vertex, int sec_Vertex);
+void nodeInsert(Node* headIndex, Node* insertNode);
+void printG(Node* h); // headIndex
 
 
 int main(void)
@@ -23,7 +25,7 @@ int main(void)
     Node* headNode = NULL;
 
 	char command;
-	int key;
+	int key, sec_Key;
 
     do{
         printf("\n\n");
@@ -51,6 +53,11 @@ int main(void)
                 break;
                 
             case 'e': case 'E':
+                printf("input Vertex 1(0~9) : ");
+                scanf("%d", &key);
+                printf("input Vertex 2(0~9) : ");
+                scanf("%d", &sec_Key);
+                insertEdge(headNode, key, sec_Key);
                 break;
 
             case 'd': case 'D':
@@ -134,6 +141,127 @@ int insertVertex(Node* h, int key)
     printf("\n Vertex[%d] 가 추가되었습니다.\n", key);
     h[key].vertex = 1; // vertex를 추가했으므로 headNode의 vertex값을 1로 만들어준다.
     return 1;
+}
+
+int insertEdge(Node* h, int fir_Vertex, int sec_Vertex)
+{
+    /*
+      두 vertex를 연결하기 연결하기 위한 함수입니다.
+
+      1. 우선 main함수에서 연결하고 싶은 두 개의 vertex를 입력받습니다.
+      2. 그 후, 다양한 전처리를 통해 에러 문구를 출력시킵니다.
+         (2-1. initializeGS를 제대로 하지 않은 경우)
+         (2-2. 0~9사이의 값을 입력하지 않은 경우)
+         (2-3. 자기간선을 만드려 하는 경우)
+         (2-4. 추가되어 있지 않은 vertex를 연결하려는 경우)
+         (2-5. 다중 간선을 만드려 하는 경우)
+
+      3. 처음으로 입력받은 fir_Vertex를 sec_Vertex와 연결합니다.
+      4. 두 번째로 입력받은 sec_Vertex를 fir_Vertex와 연결합니다.
+    */
+    
+
+//----------------------다양한 전처리----------------------
+
+    if (h == NULL) // initializeGS가 제대로 수행되지 않은 경우
+    {
+        printf("\n Error! : initializeGS가 제대로 수행되었는지 확인해 주세요!\n");
+        return -1;
+    }
+    
+    if (!(0 <= fir_Vertex && fir_Vertex < MAXVERTEX) || !(0 <= sec_Vertex && sec_Vertex < MAXVERTEX))
+    {
+        printf("\n Error! : 0 ~ 9사이의 값만 입력해주세요.\n");
+        return -1;
+    }
+
+    if (fir_Vertex == sec_Vertex) // 자기간선을 만드려 하는경우
+    {
+        printf("\n Error! : 이 프로그램은 자기간선을 허용하지 않습니다.\n");
+        return -1;
+    }
+    
+    if (h[fir_Vertex].vertex == 0 || h[sec_Vertex].vertex == 0) // vertex가 추가되어 있지 않은 경우
+    {
+        if (h[fir_Vertex].vertex == 0)
+            printf("\n Error! : 그래프에 [vertex %d]이(가) 추가되어 있지 않습니다.\n", fir_Vertex);
+        else
+                printf("\n Error! : 그래프에 [vertex %d]이(가) 추가되어 있지 않습니다.\n", sec_Vertex);
+        return 1;
+    }
+
+    // 다중간선을 만드려 하는지 확인하는 코드
+    Node* searchNode = h[fir_Vertex].next;
+    while (searchNode != NULL) // h[fir_Vertex]의 리스트 노드들을 하나씩 검색하도록 반복문 설정
+    {
+        // fir_Vertex와 sec_Vertex가 이미 연결되어 있는 경우
+        if (searchNode->vertex == sec_Vertex)
+        {
+            printf("\n Error! : 이 프로그램은 다중간선을 허용하지 않습니다.\n");
+            return -1;
+        }
+
+        searchNode = searchNode->next;
+    }
+
+//--------------------------------------------------------
+
+
+//--------------두 Vertex를 연결하기 위한 코드--------------
+
+    // 우선 fir_Vertex에서 sec_Vertex를 연결
+    Node* firstNode = (Node*)malloc(sizeof(Node));
+    if (firstNode == NULL) // 동적할당이 제대로 되지 않은 경우
+    {
+        printf("\n Error! : 동적할당이 제대로 수행되지 않았습니다.\n");
+        return -1;
+    }
+    firstNode->vertex = sec_Vertex; // fir_Vertex에서 sec_Vertex를 연결
+    firstNode->next = NULL;
+
+    // fir_Vertex에서 sec_Vertex를 연결하기 위해 h[fir_Vertex]에 firstNode 삽입
+    nodeInsert(&h[fir_Vertex], firstNode);
+
+
+    // 그 후, sec_Vertex에서 fir_Vertex를 연결
+    Node* secondNode = (Node*)malloc(sizeof(Node));
+    if (secondNode == NULL) // 동적할당이 제대로 되지 않은 경우
+    {
+        printf("\n Error! : 동적할당이 제대로 수행되지 않았습니다.\n");
+        return -1;
+    }
+    secondNode->vertex = fir_Vertex; // sec_Vertex에서 fir_Vertex를 연결
+    secondNode->next = NULL;
+    
+    // sec_Vertex에서 fir_Vertex를 연결하기 위해 h[sec_Vertex]에 secondNode 삽입
+    nodeInsert(&h[sec_Vertex], secondNode);
+
+//--------------------------------------------------------
+
+    return 1;
+}
+
+void nodeInsert(Node* headIndex, Node* insertNode)
+{
+    /*
+      헤드노드에 리스트 노드를 담기위한 함수입니다.
+    */
+    Node* previous = headIndex;
+    Node* searchNode = headIndex->next;
+
+    while (searchNode != NULL) // searchNode가 NULL일 때까지 반복
+    {
+        // 오름차순으로 노드를 넣기 위해 if문을 사용함
+        if(insertNode->vertex < searchNode->vertex)
+            break;
+
+        previous = searchNode;
+        searchNode = searchNode->next;
+    }
+
+    // insertNode를 삽입하는 코드
+    insertNode->next = searchNode;
+    previous->next = insertNode;
 }
 
 void printG(Node* h)
