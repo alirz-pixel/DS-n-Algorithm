@@ -247,30 +247,24 @@ int insertEdge(Node* h, int fir_Vertex, int sec_Vertex)
 
 //--------------두 Vertex를 연결하기 위한 코드--------------
 
-    // 우선 fir_Vertex에서 sec_Vertex를 연결
+    // vertex 연결을 위한 Node 생성
     Node* firstNode = (Node*)malloc(sizeof(Node));
-    if (firstNode == NULL) // 동적할당이 제대로 되지 않은 경우
+    Node* secondNode = (Node*)malloc(sizeof(Node));
+    if (firstNode == NULL || secondNode == NULL) // 동적할당이 제대로 되지 않은 경우
     {
         printf("\n Error! : 동적할당이 제대로 수행되지 않았습니다.\n");
         return -1;
     }
+
+    // 두 vertex를 연결하기 위해 변수의 값을 수정한다.
+    secondNode->vertex = fir_Vertex; // sec_Vertex에서 fir_Vertex를 연결
     firstNode->vertex = sec_Vertex; // fir_Vertex에서 sec_Vertex를 연결
-    firstNode->next = NULL;
+    firstNode->next = secondNode->next = NULL;
+    
 
     // fir_Vertex에서 sec_Vertex를 연결하기 위해 h[fir_Vertex]에 firstNode 삽입
     nodeInsert(&h[fir_Vertex], firstNode);
 
-
-    // 그 후, sec_Vertex에서 fir_Vertex를 연결
-    Node* secondNode = (Node*)malloc(sizeof(Node));
-    if (secondNode == NULL) // 동적할당이 제대로 되지 않은 경우
-    {
-        printf("\n Error! : 동적할당이 제대로 수행되지 않았습니다.\n");
-        return -1;
-    }
-    secondNode->vertex = fir_Vertex; // sec_Vertex에서 fir_Vertex를 연결
-    secondNode->next = NULL;
-    
     // sec_Vertex에서 fir_Vertex를 연결하기 위해 h[sec_Vertex]에 secondNode 삽입
     nodeInsert(&h[sec_Vertex], secondNode);
 
