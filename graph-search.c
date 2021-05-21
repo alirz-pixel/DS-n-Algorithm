@@ -10,6 +10,14 @@ typedef struct node {
 
 } Node;
 
+// DFS를 했을 떄, Stack에 들어오게 되는 최대 Vertex의 수는 MAXVERTEX이다.
+// 따라서 stack의 사이즈를 MAXVERTEX로 선언한다.
+Node* stack[MAXVERTEX];
+int top = -1;
+
+void push(Node* insertNode);
+void pop();
+
 // BFS를 했을 때, queue에 들어오게 되는 최대 VERTEX의 수는 MAXVERTEX이다.
 // 따라서 queue의 사이즈를 MAXVERTEX로 선언한다.
 Node* queue[MAXVERTEX];
@@ -23,7 +31,6 @@ int insertVertex(Node* h, int key);
 int insertEdge(Node* h, int fir_Vertex, int sec_Vertex);
 void nodeInsert(Node* headIndex, Node* insertNode);
 int DFS(Node* h, int startVertex);
-void DFSrecursive(Node* h, int Vertex, short int* v);
 int BFS(Node* h, int startVertex);
 void enQueue(Node* insertNode);
 Node* deQueue();
@@ -293,7 +300,7 @@ int DFS(Node* h, int startVertex)
          (2-3. 추가되어 있지 않은 vertex를 시작 vertex로 지정한 경우)
 
       3. DFS 시작 문구를 화면에 출력합니다.
-      4. 그 후, DFSrecursive 함수를 호출해 DFS를 진행합니다.
+      4. 그 후, DFS를 진행합니다.
     */
 
 
@@ -327,6 +334,14 @@ int DFS(Node* h, int startVertex)
     // DFS탐색 시작 문구를 화면에 출력
     printf("\n DFS(%d)을 시작합니다.\n\n", startVertex);
 
+    // DFS하려는 Vertex와 연결된 vertex가 없는 경우, 하나만 출력하고 함수 종료
+    if (h[startVertex].next == NULL)
+    {
+        printf(" [%d]", startVertex);
+        return 1;
+    }
+
+
     // 방문 처리를 위한 동적 배열 선언
     short int* visited = (short int*)calloc(MAXVERTEX, sizeof(short int));
     if (visited == NULL) // 동적할당이 제대로 되지 않은 경우
@@ -334,7 +349,47 @@ int DFS(Node* h, int startVertex)
         printf("\n Error! : 동적할당이 제대로 수행되지 않았습니다.\n");
         return -1;
     }
-    DFSrecursive(h, startVertex, visited); // DFS를 진행하기 위해 DFSrecursive 호출
+    
+    // stack 초기화
+    top = -1; 
+
+    // DFS 시작
+    Node* w = NULL;
+
+    push(h[startVertex].next);        // 사용자가 정한 Vertex를 stack에 넣는다.
+    visited[startVertex] = 1;         // 이 vertex를 방문처리와
+    printf(" [%d] -> ", startVertex); // 화면에 출력해준다.
+
+    while (top != -1) // stack is empty일 때까지 반복
+    {
+        // stack[top]->vertex를 아직 방문하지 않은 경우, 이와 연결된 vertex 하나를 방문하고 push함
+        while (!visited[stack[top]->vertex])
+        {
+            if (!visited[stack[top]->vertex])
+            {
+                visited[stack[top]->vertex] = 1;
+                printf(" [%d] -> ", stack[top]->vertex);
+                push(h[stack[top]->vertex].next);
+            }
+        }
+        
+        // stack[top]이 NULL일 때까지 반복
+        while (stack[top])
+        {
+            // 만약, stack[top]->vertex를 아직 방문하지 않았다면 반복문 종료 후, 
+            // 이 vertex에 대해 다시 DFS을 하러 감
+            if (!visited[stack[top]->vertex])
+                break;
+
+            stack[top] = stack[top]->next;
+        }
+
+        // 이 vertex와 연결된 vertex가 없거나 모든 vertex들을 방문한 경우, pop한다.
+        if (stack[top] == NULL)
+            pop();
+    }
+
+
     free(visited); // DFS가 끝났으므로 방문 처리를 위해 사용된 메모리 해제
 
 //--------------------------------------------------------
@@ -343,20 +398,14 @@ int DFS(Node* h, int startVertex)
     return 1;
 }
 
-void DFSrecursive(Node* h, int Vertex, short int* v)
+void push(Node* insertNode)
 {
-    /*
-      recursive방식으로 깊이 우선 탐색을 하는 함수입니다.
-    */
+    stack[++top] = insertNode;
+}
 
-    Node* searchNode = NULL;
-    v[Vertex] = 1;                 // 현재의 vertex를 방문처리함
-    printf(" [%d] -> ", Vertex);   // 현재의 vertex를 화면에 출력
-
-    // h[vertex]의 리스트 노드를 전부 탐색
-    for (searchNode = h[Vertex].next; searchNode; searchNode = searchNode->next)
-        if(!v[searchNode->vertex]) // searchNode의 vertex가 방문 처리되어 있지 않다면
-            DFSrecursive(h, searchNode->vertex, v); // 재귀함수 호출
+void pop()
+{
+    top--;
 }
 
 int BFS(Node* h, int startVertex)
