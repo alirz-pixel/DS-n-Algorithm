@@ -142,8 +142,18 @@ int initializeGS(Node** h)
 int insertVertex(Node* h, int key)
 {
     /*
-      그래프에 vertex를 추가하기 위한 함수
+      그래프에 vertex를 추가하기 위한 함수입니다.
+
+      1. main함수로부터 headNode와 추가하고 싶은 vertex를 입력받습니다.
+      2. 그 후, 다양한 전처리를 통해 에러 문구를 출력시킵니다.
+         (2-1. initializeGS를 제대로 하지 않은 경우)
+         (2-2. 0 ~ [MAXVERTEX - 1] 사이의 값을 입력하지 않은 경우)
+         (2-3. 이미 추가된 vertex를 또 추가하려는 경우)
+
+      3. headNode[key].vertex 값을 1로 만들어 vertex를 추가합니다.
     */
+
+//----------------------다양한 전처리----------------------
 
     if (h == NULL)
     {
@@ -163,6 +173,8 @@ int insertVertex(Node* h, int key)
         printf("\n Error! : 이미 추가되어있는 Vertex입니다.\n");
         return -1;
     }
+
+//--------------------------------------------------------
 
     printf("\n Vertex[%d] 가 추가되었습니다.\n", key);
     h[key].vertex = 1; // vertex를 추가했으므로 headNode의 vertex값을 1로 만들어준다.
