@@ -1,3 +1,13 @@
+/*
+ * graph-search.c
+ *
+ * Data Structures
+ *
+ * Department of Computer Science
+ * at Chungbuk National University
+ *
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 
