@@ -47,7 +47,7 @@ int main(void)
     Node* headNode = NULL;
 
 	char command;
-	int key, sec_Key;
+	int key1, key2;
 
     do{
         printf("\n\n");
@@ -70,28 +70,28 @@ int main(void)
 
             case 'v': case 'V':
                 printf("Your Key(0~%d) = ", MAXVERTEX - 1);
-                scanf("%d", &key);
-                insertVertex(headNode, key);
+                scanf("%d", &key1);
+                insertVertex(headNode, key1);
                 break;
                 
             case 'e': case 'E':
                 printf("input Vertex 1(0~%d) : ", MAXVERTEX - 1);
-                scanf("%d", &key);
+                scanf("%d", &key1);
                 printf("input Vertex 2(0~%d) : ", MAXVERTEX - 1);
-                scanf("%d", &sec_Key);
-                insertEdge(headNode, key, sec_Key);
+                scanf("%d", &key2);
+                insertEdge(headNode, key1, key2);
                 break;
 
             case 'd': case 'D':
                 printf("DFS를 시작할 노드(0~%d): ", MAXVERTEX - 1);
-                scanf("%d", &key);
-                DFS(headNode, key);
+                scanf("%d", &key1);
+                DFS(headNode, key1);
                 break;
 
             case 'b': case 'B':
                 printf("BFS를 시작할 노드(0~%d): ", MAXVERTEX - 1);
-                scanf("%d", &key);
-                BFS(headNode, key);
+                scanf("%d", &key1);
+                BFS(headNode, key1);
                 break;
 
             case 'p': case 'P':
