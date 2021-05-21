@@ -18,11 +18,15 @@ int top = -1;
 void push(Node* insertNode);
 void pop();
 
+
 // BFS를 했을 때, queue에 들어오게 되는 최대 VERTEX의 수는 MAXVERTEX이다.
 // 따라서 queue의 사이즈를 MAXVERTEX로 선언한다.
 Node* queue[MAXVERTEX];
 int front = -1;
 int rear = -1;
+
+void enQueue(Node* insertNode);
+Node* deQueue();
 
 
 /* List of user-defined functions */
@@ -32,8 +36,6 @@ int insertEdge(Node* h, int fir_Vertex, int sec_Vertex);
 void nodeInsert(Node* headIndex, Node* insertNode);
 int DFS(Node* h, int startVertex);
 int BFS(Node* h, int startVertex);
-void enQueue(Node* insertNode);
-Node* deQueue();
 void printG(Node* h); // headIndex
 int freeGS(Node* h);
 
