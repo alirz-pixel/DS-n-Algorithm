@@ -140,6 +140,7 @@ int initialize(int** a)
 
 int freeArray(int *a)
 {
+	// 입력받은 배열(a)에 메모리가 할당되어있을 경우에만 메모리가 해제되도록함.
 	if(a != NULL)
 		free(a);
 	return 0;
@@ -152,43 +153,53 @@ void printArray(int *a)
 		return;
 	}
 	for(int i = 0; i < MAX_ARRAY_SIZE; i++)
-		printf("a[%02d] ", i);
+		printf("a[%02d] ", i); // 정수형을 출력할 여백을 2자리 마련한 후, 빈자리가 있을 경우 0을 채우도록하여 화면에 출력함.
 	printf("\n");
 	for(int i = 0; i < MAX_ARRAY_SIZE; i++)
-		printf("%5d ", a[i]);
+		printf("%5d ", a[i]);  // 정수형을 출력할 여백을 5자리 마련하여 화면에 출력함.
 	printf("\n");
 }
 
 
 int selectionSort(int *a)
 {
-	int min;
-	int minindex;
-	int i, j;
+	int min;      // 최솟값을 저장하는 변수
+	int minindex; // 최솟값의 위치를 저장하는 변수
+	int i, j;     // 반복문에 사용될 변수
 
 	printf("Selection Sort: \n");
 	printf("----------------------------------------------------------------\n");
 
+	// 정렬되기 이전의 배열을 화면에 출력한다.
 	printArray(a);
 
+	/*
+	  이 반복문은 a의 0번째 인덱스부터 a의 MAX_ARRAY_SIZE 인덱스까지 반복하게 되는데,
+	  반복문 한번의 수행당 기준 위치(i번쨰)와 i번째 이후에 있는 가장 작은 원소를 swap을 하게된다.
+	  따라서 이 반복문이 종료되면, a의 배열은 정렬이 된다. (selectionSort)
+	*/
 	for (i = 0; i < MAX_ARRAY_SIZE; i++)
 	{
-		minindex = i;
-		min = a[i];
+		minindex = i; // minindex의 디폴트 값을 i번째로 해둔다.  (반복문을 돌면서 수정될 예정)
+		min = a[i];   // min의 디폴트 값을 a[i]의 값으로 해둔다. (반복문을 돌면서 수정될 예정)
+
+		// for문은 i + 1 부터 MAX_ARRAY_SIZE 까지 반복하면서 minindex와 min 값을 수정한다.
 		for(j = i+1; j < MAX_ARRAY_SIZE; j++)
 		{
-			if (min > a[j])
+			if (min > a[j])   // 만약, a의 j번째 값보다 min 값이 더 크다면 (최솟값 변경)
 			{
-				min = a[j];
-				minindex = j;
+				min = a[j];   // 최솟값(min)을 a의 j번째 값으로 수정한다.
+				minindex = j; // 최솟값이 들어있는 위치(minindex)를 j번째로 수정한다.
 			}
 		}
-		a[minindex] = a[i];
+
+		// a의 i 번째의 값과 minindex 번째의 값을 swap한다.
+		a[minindex] = a[i]; 
 		a[i] = min;
 	}
 
 	printf("----------------------------------------------------------------\n");
-	printArray(a);
+	printArray(a); // 정렬된 후의 배열을 화면에 출력한다.
 	return 0;
 }
 
