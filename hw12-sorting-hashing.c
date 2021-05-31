@@ -243,26 +243,31 @@ int bubbleSort(int *a)
 {
 	int i, j, t;
 
-	printf("Bubble Sort: \n");
+	printf("Bubble Sort: \n"); 
 	printf("----------------------------------------------------------------\n");
 
-	printArray(a);
+	printArray(a); // 정렬되기 이전의 배열을 화면에 출력한다.
 
+	/*
+	  이 반복문은 a의 1번째 인덱스부터 a의 MAX_ARRAY_SIZE - 1 인덱스까지 반복하게 되는데,
+	  반복문 한번의 수행당 a의 값들 중 가장 큰 값이 맨 뒤로 이동하게 된다.
+	  따라서 이 반복문이 종료되면, a의 배열은 정렬이 된다. (bubbleSort)
+	*/
 	for(i = 0; i < MAX_ARRAY_SIZE; i++)
 	{
 		for (j = 0; j < MAX_ARRAY_SIZE; j++)
 		{
-			if (a[j-1] > a[j])
+			if (a[j-1] > a[j]) // 현재의 a[j]의 값이 a[j - 1]보다 작다면 swap (제일 큰 값을 맨 뒤로 보내기 위해서)
 			{
-				t = a[j-1];
-				a[j-1] = a[j];
-				a[j] = t;
+				t = a[j-1];    // swap하기 위해 t에 a[j-1]의 값 대입
+				a[j-1] = a[j]; // a[j - 1]의 값을 t에 대입했으므로, a[j - 1]에 a[j]값 대입
+				a[j] = t;	   // a[j]에 t의 값을 대입함으로써 swap 완료
 			}
 		}
 	}
 
 	printf("----------------------------------------------------------------\n");
-	printArray(a);
+	printArray(a); // 정렬된 후의 배열을 화면에 출력한다.
 
 	return 0;
 }
