@@ -321,26 +321,26 @@ int quickSort(int *a, int n)
 
 	if (n > 1)
 	{
-		v = a[n-1];
+		v = a[n-1]; // pivot 값을 배열의 오른쪽에 위치한 원소 선택
 		i = -1;
 		j = n - 1;
 
 		while(1)
 		{
-			while(a[++i] < v);
-			while(a[--j] > v);
+			while(a[++i] < v); // pivot 값보다 작은 값의 위치(i)를 찾기 위한 반복문
+			while(a[--j] > v); // pivot 값보다 큰 값의 위치(j)를 찾기 위한 반복문
 
-			if (i >= j) break;
-			t = a[i];
+			if (i >= j) break; // 위의 두 반복문이 종료되었을 때, i가 j보다 크거나 같다면 반복문 종료
+			t = a[i];    // 위의 반복문을 통해 얻은 두 위치에 해당하는 값들을 swap
 			a[i] = a[j];
 			a[j] = t;
 		}
-		t = a[i];
+		t = a[i];      // pivot의 위치에 있는 값과 a[i]의 값을 swap
 		a[i] = a[n-1];
 		a[n-1] = t;
 
-		quickSort(a, i);
-		quickSort(a+i+1, n-i-1);
+		quickSort(a, i);         // 0 ~ i번째의 값들에 대해 quickSort 진행
+		quickSort(a+i+1, n-i-1); // [i + 1] ~ [n - i - 1]번쨰의 값들에 대해 quickSort 진행
 	}
 
 
@@ -348,7 +348,7 @@ int quickSort(int *a, int n)
 }
 
 int hashCode(int key) {
-   return key % MAX_HASH_TABLE_SIZE;
+   return key % MAX_HASH_TABLE_SIZE; // 해시 함수를 제산 함수로 구현한다.
 }
 
 int hashing(int *a, int **ht)
@@ -363,6 +363,7 @@ int hashing(int *a, int **ht)
 		hashtable = *ht;	/* hash table이 NULL이 아닌경우, table 재활용, reset to -1 */
 	}
 
+	// 해시 테이블의 모든 요소들을 -1로 초기화 해준다.
 	for(int i = 0; i < MAX_HASH_TABLE_SIZE; i++)
 		hashtable[i] = -1;
 
@@ -376,26 +377,31 @@ int hashing(int *a, int **ht)
 	int index = -1;
 	for (int i = 0; i < MAX_ARRAY_SIZE; i++)
 	{
-		key = a[i];
-		hashcode = hashCode(key);
+		key = a[i]; // key값은 현재의 a[i]값을 대입해준다.
+		hashcode = hashCode(key); // 그리고 이 key값에 대해 해시 함수를 불러와 key값이 들어갈 위치(hashcode)를 찾는다.
+		
 		/*
 		printf("key = %d, hashcode = %d, hashtable[%d]=%d\n", key, hashcode, hashcode, hashtable[hashcode]);
 		*/
+
 		if (hashtable[hashcode] == -1)
 		{
+			// 충돌이 일어나지 않은 경우, hashtable[hashcode]에 key값 대입
 			hashtable[hashcode] = key;
 		} else 	{
 
 			index = hashcode;
 
+			// hashtable[index]에 대해 충돌이 일어나지 않을 때까지 반복
 			while(hashtable[index] != -1)
 			{
-				index = (++index) % MAX_HASH_TABLE_SIZE;
+				// 오버플로우를 처리하기 위해, 선형 조사법을 이용하였다.
+				index = (++index) % MAX_HASH_TABLE_SIZE; // 충돌이 일어나지 않을 때까지 index를 1씩 더해준다.
 				/*
 				printf("index = %d\n", index);
 				*/
 			}
-			hashtable[index] = key;
+			hashtable[index] = key; // 충돌이 일어나지 않은 hatable[index]에 key값 대입
 		}
 	}
 
@@ -404,15 +410,20 @@ int hashing(int *a, int **ht)
 
 int search(int *ht, int key)
 {
-	int index = hashCode(key);
+	int index = hashCode(key); // 찾고자 하는 key값에 대해 hash함수를 수행한 후, 리턴값을 index에 저장한다.
 
-	if(ht[index] == key)
-		return index;
+	if(ht[index] == key) // hashtable의 index 위치에 찾고자하는 key값이 있다면, 
+		return index;    // index 반환
 
-	while(ht[++index] != key)
+	// hashtable의 index 위치에 찾고자하는 key값이 없다면,
+	// key값이 나올 때까지 index를 1씩 더해준다.
+	while(ht[++index] != key) 
 	{
-		index = index % MAX_HASH_TABLE_SIZE;
+		// 1씩 더하다가 index가 MAX_HASH_TABLE_SIZE를 넘어가게 되면 나머지 연산을 통해 
+		// 다시 배열의 처음부터 탐색할 수 있도록 해준다. (index를 0으로 만들어 준다.)
+		index = index % MAX_HASH_TABLE_SIZE; 
 	}
+	// key값을 찾았으므로 그 위치에 해당하는 index 반환
 	return index;
 }
 
