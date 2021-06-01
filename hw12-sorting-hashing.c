@@ -255,9 +255,9 @@ int bubbleSort(int *a)
 	*/
 	for(i = 0; i < MAX_ARRAY_SIZE; i++)
 	{
-		for (j = 0; j < MAX_ARRAY_SIZE; j++)
+		for (j = 1; j < MAX_ARRAY_SIZE; j++)
 		{
-			if (a[j-1] > a[j]) // 현재의 a[j]의 값이 a[j - 1]보다 작다면 swap (제일 큰 값을 맨 뒤로 보내기 위해서)
+			if (a[j - 1] > a[j]) // 현재의 a[j]의 값이 a[j - 1]보다 작다면 swap (제일 큰 값을 맨 뒤로 보내기 위해서)
 			{
 				t = a[j-1];    // swap하기 위해 t에 a[j-1]의 값 대입
 				a[j-1] = a[j]; // a[j - 1]의 값을 t에 대입했으므로, a[j - 1]에 a[j]값 대입
